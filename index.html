@@ -307,7 +307,7 @@ $(document).ready(function()
 		'Undefined' : '未定義値'
 		}
 	};
-	propagateThisSiteLang();
+	
 	// If we are called with an anchor in the url, make sure we show the corresponding menu item as selected
 	if( window.location.hash.length )
 	{
@@ -325,6 +325,22 @@ $(document).ready(function()
 		});
 	}
 	
+	$('nav a').on('click', function()
+	{
+		//var hash = window.location.hash;
+		var hash = $(this).hash;
+		$( 'nav a' ).each(function(i,e) 
+		{
+            // checks if its the same on the address bar
+			if( hash != e.hash ) 
+			{ 
+				$(this).removeClass( 'active' );
+			}
+		});
+		$(this).addClass( 'active' );
+	});
+	
+	propagateThisSiteLang();
 	window.propagateLang = function( selectedLang )
 	{
 		var langLower = new String( selectedLang ).toLowerCase();
@@ -401,7 +417,9 @@ $(document).ready(function()
 		var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
 		if( key == 27 ) 
 		{
-			document.location='#bap';
+// 			document.location='#bap';
+			$('#maestro').hide();
+			$('#mask').hide();
 		}
 	});
 	
@@ -413,13 +431,27 @@ $(document).ready(function()
 			// if the target of the click isn't the container...
 			if( !container.is( e.target )
 				// ... nor a descendant of the container
-				&& container.has( e.target ).length === 0 )
+				&& container.has( e.target ).length === 0 && 
+				!$('#showMaestro').is( e.target ) )
 			{
+// 				document.location = '#bap';
 				container.hide();
+				$('#mask').hide();
 			}
 		}
 	});
+	$('#showMaestro').on('click', function(e)
+	{
+		e.preventDefault();
+		$('#maestro').show();
+		$('#mask').show();
+	});
 	
+	$('#maestro .close, #maestro .button').on('click', function()
+	{
+		$('#maestro').hide();
+		$('#mask').hide();
+	});
 	
 	// Does not work :-(
 	// 	$('input[name=toggle]:not(:checked) ~ nav #langMenu').hoverIntent(
@@ -447,21 +479,6 @@ $(document).ready(function()
 			return false;
 		}
 		propagateLang( $(this).val() );
-	});
-	
-	$('nav a').on('click', function()
-	{
-		//var hash = window.location.hash;
-		var hash = $(this).hash;
-		$( 'nav a' ).each(function(i,e) 
-		{
-            // checks if its the same on the address bar
-			if( hash != e.hash ) 
-			{ 
-				$(this).removeClass( 'active' );
-			}
-		});
-		$(this).addClass( 'active' );
 	});
 });
 		</script>
@@ -648,7 +665,7 @@ $(document).ready(function()
 						</div>
 						This year, the Black Angels Party takes place on a double deck yacht in the bay of Tokyo. The dress code is black formal.<br />
 						During the Black Angels Party, there will be a pitch contest from a few start-ups that will have been screened by Angels, Inc board for their quality and value.</p>
-						<p>The master organiser for the Black Angels is <a href="#maestro">Guy Perryman</a>, already famous for his long experience and successes in delivering high profile events for the British Chamber of Commerce.</p>
+						<p>The master organiser for the Black Angels is <a href="#bap" id="showMaestro">Guy Perryman</a>, already famous for his long experience and successes in delivering high profile events for the British Chamber of Commerce.</p>
 					</div>
 				</div>
 			</section>
@@ -707,6 +724,11 @@ $(document).ready(function()
 			</div>
 		</footer>
 		<div id="maestro">
+			<a href="#close" title="Close" class="close">X</a>
+			<div class="header">
+				<h2>Guy Perryman</h2>
+			</div>
+			<div class="body">
 <img src="Guy_Perryman.png" alt="Guy Perryman" /><p>Guy Perryman is a British radio broadcaster, voice actor and events promoter who has DJ'd for royalty including HRH Prince William and interviewed rock royalty including Sir Paul McCartney.</p>
 <p>Appointed MBE in the British New Year Honours list 2017 for services to British music in Japan. Awarded Person of the Year at the British Chamber of Commerce in Japan, British Business Awards 2013 for promoting British music, fashion and culture in Japan.</p>
 <p>Based in Tokyo since 1990 when brought to Japan as DJ for the launch of Virgin Megastores.<br />
@@ -717,7 +739,11 @@ His voice can be heard on NHK World TV programs, a number of product commercials
 DJ and MC for many corporate experiences including for Dom Perignon, Globe-Trotter and British Embassy Tokyo.<br />
 1983-1990 DJ at 2SER FM, 2JJJ FM and Virgin Megastores in Sydney, Australia.<br />
 Born 1965 in Scotland to English parents, raised in Singapore and Australia.</p>
+			</div>
+			<div class="footer">
+				<button class="button">Close</button>
+			</div>
 		</div>
-		<div id="mask" onclick="document.location='#';"></div>
+		<div id="mask"></div>
 	</body>
 </html>

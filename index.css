@@ -502,48 +502,6 @@ footer .footer-policy br
 	display: none;
 }
 
-#maestro
-{
-    display: none;
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	   -moz-transform: translate(-50%, -50%);
-	        transform: translate(-50%, -50%);
-    width: 60%;
-    z-index: 1000;
-    color: black;
-    background: white;
-    padding: 10px;
-    -webkit-border-radius: 10px;
-       -moz-border-radius: 10px;
-         -o-border-radius: 10px;
-            border-radius: 10px;
-}
-/* 
-#maestro
-{
-    display: none;
-    position: absolute;
-    z-index: 1000;
-    top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	   -moz-transform: translate(-50%, -50%);
-	        transform: translate(-50%, -50%);
-    width: 60%;
-    color: black;
-    margin: 0 auto;
-    background: white;
-    padding: 10px;
-    -webkit-border-radius: 10px;
-       -moz-border-radius: 10px;
-         -o-border-radius: 10px;
-            border-radius: 10px;
-}
- */
-
 #mask
 {
     display: none;
@@ -556,18 +514,157 @@ footer .footer-policy br
     background: rgba(0,0,0,0.6);
 }
 
+#maestro
+{
+    display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	   -moz-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
+    width: 60%;
+    z-index: 1000;
+    color: black;
+    padding: 0;
+    background: white;
+    -webkit-border-radius: 10px;
+       -moz-border-radius: 10px;
+         -o-border-radius: 10px;
+            border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#maestro .body
+{
+    padding: 10px;
+	font-size: 12px;
+}
+
+/* 
 #maestro:target, #maestro:target + #mask
 {
     display: block;
     opacity: 1;
 }
+ */
 
-#maestro > img
+#maestro .body > img
 {
 	float: left;
 	max-width: 200px;
 	max-height: 400px;
-	padding: 10px;
+	margin: 10px;
+	box-shadow: 8px 8px 10px #aaa;
+}
+
+#maestro .close 
+{
+	position: absolute;
+	top: -10px;
+	right: -12px;
+	width: 24px;
+	color: #FFFFFF;
+	font-weight: bold;
+	line-height: 25px;
+	text-align: center;
+	text-decoration: none;
+	background: #606061;
+	-webkit-border-radius: 12px;
+	   -moz-border-radius: 12px;
+	        border-radius: 12px;
+	-webkit-box-shadow: 0 0 10px #000000;
+	   -moz-box-shadow: 0 0 10px #000000;
+	        box-shadow: 0 0 10px #000000;
+	-webkit-transition: all 0.5s ease-out;
+	   -moz-transition: all 0.5s ease-out;
+	     -o-transition: all 0.5s ease-out;
+	        transition: all 0.5s ease-out;
+	-webkit-transition-delay: 0.2s;
+	   -moz-transition-delay: 0.2s;
+	     -o-transition-delay: 0.2s;
+	        transition-delay: 0.2s;
+}
+
+#maestro .close:hover 
+{
+	background: #ff003b;
+	-webkit-transition: all 0.5s ease-out;
+	   -moz-transition: all 0.5s ease-out;
+	     -o-transition: all 0.5s ease-out;
+	        transition: all 0.5s ease-out;
+}
+
+#maestro .button 
+{
+	display: inline-block;
+	float: right;
+	background-color: #f6f6f6;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(246, 246, 246)), to(rgb(225, 225, 225)));
+	background-image: -webkit-linear-gradient(top, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:    -moz-linear-gradient(top, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:     -ms-linear-gradient(top, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:      -o-linear-gradient(top, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:         linear-gradient(top, rgb(246, 246, 246), rgb(225, 225, 225));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f6f6f6', EndColorStr='#e1e1e1');
+	border: 1px solid #ccc;
+	padding: 5px 15px;
+	color: #555;
+	text-decoration: none;
+	text-shadow: 0 2px rgba(255,255,255,.9);
+	-webkit-border-radius: 20px;
+	   -moz-border-radius: 20px;
+	        border-radius: 20px;
+	-webkit-box-shadow: 0 1px rgba(0,0,0,.35);
+	   -moz-box-shadow: 0 1px rgba(0,0,0,.35);
+	        box-shadow: 0 1px rgba(0,0,0,.35);
+}
+
+#maestro .button:active 
+{
+	background-color: #f6f6f6;
+	background-image: -webkit-gradient(linear, left bottom, left top, from(rgb(246, 246, 246)), to(rgb(225, 225, 225)));
+	background-image: -webkit-linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:    -moz-linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:     -ms-linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:      -o-linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:         linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
+	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f6f6f6', EndColorStr='#e1e1e1');
+}
+
+#maestro .footer:before,
+#maestro .footer:after 
+{
+	content: "";
+	display: table;
+}
+
+#maestro .footer:after 
+{
+	clear: both;
+}
+
+#maestro .header, 
+#maestro .footer 
+{
+	border-bottom: 1px solid #e7e7e7;
+	border-radius: 5px 5px 0 0;
+	padding: 15px;
+	background: #f7f7f7;
+}
+
+#maestro .footer 
+{
+	border: none;
+	border-top: 1px solid #e7e7e7;
+	border-radius: 0 0 5px 5px;
+}
+
+#maestro .header h2 
+{
+	color: #000;
+	margin: 0;
+	font-size: 16px;
 }
 
 #overlayVideo
