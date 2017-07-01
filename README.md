@@ -180,3 +180,4 @@ The CSS file [langs.css](./langs.css) contains all the specifications including 
 1. Build the icons referenced in the header
 1. Create a robots.txt file
 1. Remove the unused language from the menu as they are here just to test
+1. Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected
