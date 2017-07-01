@@ -54,6 +54,92 @@ window.l10n = {
 };
 ```
 
+This is used to set the menu item as selected if the page was opened with an anchor in it, ie with a target to a section of the page
+``` JavaScript
+if( window.location.hash.length )
+{
+  var hash = window.location.hash;
+  $( 'nav a' ).each(function(i,e)
+  {
+    if( hash == e.hash )
+    {
+      $(this).addClass( 'active' );
+    }
+    else
+    {
+      $(this).removeClass( 'active' );
+    }
+  });
+}
+```
+
+Then we have this piece of jQuery code to catch any click on the menu items and set the .active class accordingly so the menu item can be displayed as being selected.
+I wanted to use the :target selector, but I would have had to make considerable change to the structure of the code just to avoid a small piece of JavaScript, so it was clearly not worth the effort.
+``` JavaScript
+$('nav a').on('click', function()
+{
+  //var hash = window.location.hash;
+  var hash = $(this).hash;
+  $( 'nav a' ).each(function(i,e)
+  {
+          // checks if its the same on the address bar
+    if( hash != e.hash )
+    {
+      $(this).removeClass( 'active' );
+    }
+  });
+  $(this).addClass( 'active' );
+});
+```
+
+Next is the localisation propagation based on the interface language active. This makes uses of the standard css :lang selector.
+``` JavaScript
+propagateThisSiteLang();
+window.propagateLang = function( selectedLang )
+{
+  var langLower = new String( selectedLang ).toLowerCase();
+  $(':root').attr( 'lang', selectedLang );
+  $('title').text( $('title').data( langLower ) );
+  $('input,textarea,select').each(function()
+  {
+    var eType = $(this).type || this.tagName.toLowerCase();
+    var eName = $(this).attr('name');
+    thisLang = new String( $(this).attr('lang') );
+    if( typeof( thisLang ) != typeof( undefined ) &&
+      thisLang !== false &&
+      thisLang != 'undefined' &&
+      thisLang.length > 0 )
+    {
+      if( $(this).attr('lang') == selectedLang )
+      {
+        $(this).attr( 'disabled', false );
+      }
+      else
+      {
+        $(this).attr( 'disabled', 'disabled' );
+      }
+    }
+  });
+};
+
+function propagateThisSiteLang()
+{
+  if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
+  {
+    propagateLang( $(':root').attr('lang') );
+  }
+  else
+  {
+    setTimeout( propagateThisSiteLang, 1000 );
+  }
+}
+
+if( typeof( l10n[ $(':root').attr( 'lang' ) ] ) != 'undefined' )
+{
+  propagateLang( $(':root').attr( 'lang' ) );
+}
+```
+
 I spent quite some time to find this information, because the documentation of magnificPopup is not very complete. So after hours of search, I found this pen at <https://codepen.io/meladq/pen/CLqtk>
 ``` JavaScript
 $('.playVideo').magnificPopup(
@@ -180,5 +266,6 @@ The CSS file [langs.css](./langs.css) contains all the specifications including 
 1. Build the icons referenced in the header
 1. Create a robots.txt file
 1. Remove the unused language from the menu as they are here just to test
-1. Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected
+1. ~~Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected~~ (fix #6)
+
 See <https://github.com/angels-Inc/black-static/issues> for more
