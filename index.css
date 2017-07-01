@@ -241,6 +241,13 @@ nav a:hover
 	color: #FFFFFF;
 }
 
+/* There is no way to set this using css3 alone unfortunately, so we use a bit of jQuery code to set/remove the class */
+nav a.active
+{
+	background: #42A5F5;
+	color: #FFFFFF;
+}
+
 nav .xlang
 {
 	padding-left: 10px;
@@ -835,6 +842,11 @@ img.bapVideo
 	{
 		background: #42A5F5 !important;
 		color: white !important;
+	}
+
+	nav a.active
+	{
+		color: #FFFFFF !important;
 	}
 
 	.toggle-menu 

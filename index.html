@@ -22,7 +22,7 @@
 		>Angels, Inc Black Angels</title>
 		<link href="https://black.angels-inc.com/ba.ico" rel="shortcut icon" type="image/icon" />
 		<link href="https://black.angels-inc.com/ba.ico" rel="icon" />
-		<link rel="stylesheet prefetch" href="normalize.min.css" />
+		<!-- link rel="stylesheet prefetch" href="normalize.min.css" / -->
 		<link rel="stylesheet" href="index.css" media="screen, print" type="text/css" />
 		<link rel="stylesheet" href="langs.css" />
 		<link rel="stylesheet" href="magnific-popup/magnific-popup.css" />
@@ -308,6 +308,22 @@ $(document).ready(function()
 		}
 	};
 	propagateThisSiteLang();
+	// If we are called with an anchor in the url, make sure we show the corresponding menu item as selected
+	if( window.location.hash.length )
+	{
+		var hash = window.location.hash;
+		$( 'nav a' ).each(function(i,e) 
+		{
+			if( hash == e.hash ) 
+			{ 
+				$(this).addClass( 'active' );
+			}
+			else
+			{
+				$(this).removeClass( 'active' );
+			}
+		});
+	}
 	
 	window.propagateLang = function( selectedLang )
 	{
@@ -431,6 +447,21 @@ $(document).ready(function()
 			return false;
 		}
 		propagateLang( $(this).val() );
+	});
+	
+	$('nav a').on('click', function()
+	{
+		//var hash = window.location.hash;
+		var hash = $(this).hash;
+		$( 'nav a' ).each(function(i,e) 
+		{
+            // checks if its the same on the address bar
+			if( hash != e.hash ) 
+			{ 
+				$(this).removeClass( 'active' );
+			}
+		});
+		$(this).addClass( 'active' );
 	});
 });
 		</script>
