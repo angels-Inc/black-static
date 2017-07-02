@@ -346,6 +346,55 @@ $(document).ready(function()
 		});
 	}
 	
+	window.setCookie = function(cname, cvalue, exdays)
+	{
+		// Set expiry to 1 month by default
+		if( exdays === undefined ) exdays = 30;
+		var d = new Date();
+		d.setTime( d.getTime() + (exdays * 24 * 60 * 60 * 1000) );
+		var expires = "expires=" + d.toUTCString();
+		cvalue = encodeURIComponent( JSON.stringify( cvalue ) );
+		document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+	}
+	
+	window.getCookie = function(cname, json)
+	{
+		var name = cname + "=";
+		var ca = document.cookie.split(';');
+		var thisCookie = "";
+		for(var i = 0; i < ca.length; i++)
+		{
+			var c = ca[i];
+			while( c.charAt(0) == ' ' ) c = c.substring(1);
+			if( c.indexOf(name) == 0 ) 
+			{
+				thisCookie = c.substring( name.length, c.length );
+				break;
+			}
+		}
+		if( thisCookie.length )
+		{
+			thisCookie = decodeURIComponent(thisCookie.replace(/\+/g,  " "));
+			return( json ? $.parseJSON( thisCookie ) : thisCookie );
+		}
+		else
+		{
+			return( json ? {} : "" );
+		}
+	}
+	
+	window.eraseCookie = function(name) 
+	{
+		createCookie( name, "", -1, "/" );
+	}
+	
+	var cookieName = 'baCookie';
+	var cookieData = getCookie(cookieName, true);
+	if( cookieData.lang )
+	{
+		propagateLang( cookieData.lang );
+	}
+	
 	$('nav a').on('click', function()
 	{
 		//var hash = window.location.hash;
@@ -387,6 +436,11 @@ $(document).ready(function()
 				}
 			}
 		});
+		if( cookieData.lang != selectedLang )
+		{
+			cookieData.lang = selectedLang;
+			setCookie(cookieName, cookieData);
+		}
 	};
 	
 	function propagateThisSiteLang()
@@ -394,6 +448,10 @@ $(document).ready(function()
 		if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
 		{
 			propagateLang( $(':root').attr('lang') );
+			if( $('input[name="lang"][value="' + $(':root').attr('lang') + '"]').length )
+			{
+				$('input[name="lang"][value="' + $(':root').attr('lang') + '"]').prop( 'checked', true );
+			}
 		}
 		else
 		{
@@ -615,32 +673,13 @@ $(document).ready(function()
 			</div>
 			<div class="xlang" id="langMenu">
 				<form>
-					<input id="l10n-cn-TW" name="lang" type="radio" value="cn-TW" />
-					<input id="l10n-de-DE" name="lang" type="radio" value="de-DE" />
-					<input id="l10n-en-GB" name="lang" type="radio" value="en-GB" checked="checked" />
+					<input id="l10n-en-GB" name="lang" type="radio" value="en-GB" />
 					<input id="l10n-fr-FR" name="lang" type="radio" value="fr-FR" />
-					<input id="l10n-hi-IN" name="lang" type="radio" value="hi-IN" />
-					<input id="l10n-id-ID" name="lang" type="radio" value="id-ID" />
 					<input id="l10n-ja-JP" name="lang" type="radio" value="ja-JP" />
-					<input id="l10n-ko-KR" name="lang" type="radio" value="ko-KR" />
-					<input id="l10n-ms-MY" name="lang" type="radio" value="ms-MY" />
-					<input id="l10n-th-TH" name="lang" type="radio" value="th-TH" />
-					<input id="l10n-tl-PH" name="lang" type="radio" value="tl-PH" />
-					<input id="l10n-vi-VN" name="lang" type="radio" value="vi-VN" />
 					<div>
 						<div class="xflag" size="small"></div>
 					</div>
 					<ul>
-						<li>
-							<label for="l10n-cn-TW" code="cn-TW">
-								<div class="xflag" size="small"></div><span lang="en-GB">Taiwanese</span><span lang="fr-FR">Taiwanais</span><span lang="ja-JP">台湾語</span>
-							</label>
-						</li>
-						<li>
-							<label for="l10n^de-DE" code="de-DE">
-								<div class="xflag" size="small"></div><span lang="en-GB">German</span><span lang="fr-FR">Allemand</span><span lang="ja-JP">ドイツ語</span>
-							</label>
-						</li>
 						<li>
 							<label for="l10n-en-GB" code="en-GB">
 								<div class="xflag" size="small"></div><span lang="en-GB">British English</span><span lang="fr-FR">Anglais</span><span lang="ja-JP">英英語</span>
@@ -652,43 +691,8 @@ $(document).ready(function()
 							</label>
 						</li>
 						<li>
-							<label for="l10n-hi-IN" code="hi-IN">
-								<div class="xflag" size="small"></div><span lang="en-GB">Hindi</span><span lang="fr-FR">Hindi</span><span lang="ja-JP">ヒンディ語</span>
-							</label>
-						</li>
-						<li>
-							<label for="l10n-id-ID" code="id-ID">
-								<div class="xflag" size="small"></div><span lang="en-GB">Indonesian</span><span lang="fr-FR">Indonésien</span><span lang="ja-JP">インドネシア語</span>
-							</label>
-						</li>
-						<li>
 							<label for="l10n-ja-JP" code="ja-JP">
 								<div class="xflag" size="small"></div><span lang="en-GB">Japanese</span><span lang="fr-FR">Japonais</span><span lang="ja-JP">日本語</span>
-							</label>
-						</li>
-						<li>
-							<label for="l10n-ko-KR" code="ko-KR">
-								<div class="xflag" size="small"></div><span lang="en-GB">Korean</span><span lang="fr-FR">Coréen</span><span lang="ja-JP">韓国語</span>
-							</label>
-						</li>
-						<li>
-							<label for="l10n-ms-MY" code="ms-MY">
-								<div class="xflag" size="small"></div><span lang="en-GB">Malay</span><span lang="fr-FR">Malay</span><span lang="ja-JP">マレー語</span>
-							</label>
-						</li>
-						<li>
-							<label for="l10n-th-TH" code="th-TH">
-								<div class="xflag" size="small"></div><span lang="en-GB">Thai</span><span lang="fr-FR">Thaï</span><span lang="ja-JP">タイ語</span>
-							</label>
-						</li>
-						<li>
-							<label for="l10n-tl-PH" code="tl-PH">
-								<div class="xflag" size="small"></div><span lang="en-GB">Tagalog</span><span lang="fr-FR">Tagalog</span><span lang="ja-JP">タガログ語</span>
-							</label>
-						</li>
-						<li>
-							<label for="l10n-vi-VN" code="vi-VN">
-								<div class="xflag" size="small"></div><span lang="en-GB">Vietnamese</span><span lang="fr-FR">Vietnamien</span><span lang="ja-JP">ベトナム語</span>
 							</label>
 						</li>
 					</ul>
