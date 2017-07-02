@@ -25,6 +25,7 @@
 		<!-- link rel="stylesheet prefetch" href="normalize.min.css" / -->
 		<link rel="stylesheet" href="index.css" media="screen, print" type="text/css" />
 		<link rel="stylesheet" href="langs.css" />
+		<link rel="stylesheet" href="icons.css" />
 		<link rel="stylesheet" href="magnific-popup/magnific-popup.css" />
 		<link rel="dns-prefetch" href="black.angels-inc.com" />
 		<link rel="apple-touch-icon" sizes="57x57" href="//black.angels-inc.com/apple-touch-icon-57x57.png" />
@@ -280,7 +281,13 @@
 }
 		</style>
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+		<!-- to format dates with timezone -->
+		<script src="moment-with-locales.js"></script>
+		<script src="moment-timezone-with-data.min.js"></script>
+		<!-- to accurately guess visitor's timezone -->
+		<script src="jstz.min.js"></script>
 		<script src="jquery.hoverIntent.js"></script>
+		<script src="sprintf.js"></script>
 		<script>
 $(window).on('load', function() 
 {
@@ -296,17 +303,31 @@ $(window).on('load', function()
 		<script>
 $(document).ready(function() 
 {
-	window.l10n = {
-	'en-GB'	: {
-		'Undefined' : 'Undefined'
+	window.l10n = 
+	{
+	'en-GB'	: 
+	{
+		'Undefined' : 'Undefined',
+		'Your datetime' : 'Your current local date and time are: %s and it is %s in Tokyo. ',
+		'We are opened' : 'We are available. Feel free to call us or send us a mail and we will reply quickly.',
+		'We are closed' : 'Sorry, this is outside of our business hours. Please send us a mail and we will get back to you quickly.'
 		},
-	'fr-FR'	: {
-		'Undefined' : 'Indéfini'
+	'fr-FR'	: 
+	{
+		'Undefined' : 'Indéfini',
+		'Your datetime' : 'Votre date et heure actuelles sont : %s et il est %s à Tokyo. ',
+		'We are opened' : "Nous sommes disponibles. N'hésitez pas à nous appeler ou nous envoyer un courriel et nous répondrons rapidement.",
+		'We are closed' : "Désolé, c'est en dehors de nos heures de bureau. Envoyez-nous un courriel et nous vous répondrons rapidement."
 		},
-	'ja-JP' : {
-		'Undefined' : '未定義値'
+	'ja-JP' : 
+	{
+		'Undefined' : '未定義値',
+		'Your datetime' : '現在、そちらの時間は%sですが、東京では%sになっております。',
+		'We are opened' : '弊社営業時間内ですので、ぜひご架電もしくはメールを配信してください。早くご回答させていただくよう努力します。',
+		'We are closed' : 'すみませんが、営業時間外ですので、後ほどご架電していただくか、メールの配信していただければ早くご回答させていただくよう努力します。'
 		}
 	};
+	window.TZ = 'Asia/Tokyo';
 	
 	// If we are called with an anchor in the url, make sure we show the corresponding menu item as selected
 	if( window.location.hash.length )
@@ -418,39 +439,46 @@ $(document).ready(function()
 		if( key == 27 ) 
 		{
 // 			document.location='#bap';
-			$('#maestro').hide();
+			$('.modal').hide();
 			$('#mask').hide();
 		}
 	});
 	
 	$(document).on('click', function(e)
 	{
-		var container  = $('#maestro');
-		if( container.is( ':visible' ) )
+		if( $('.modal').is( ':visible' ) )
 		{
 			// if the target of the click isn't the container...
-			if( !container.is( e.target )
+			if( !$('.modal').is( e.target )
 				// ... nor a descendant of the container
-				&& container.has( e.target ).length === 0 && 
-				!$('#showMaestro').is( e.target ) )
+				&& $('.modal').has( e.target ).length === 0 && 
+				!$('#showMaestro').is( e.target ) &&
+				!$('.showContact').is( e.target ) )
 			{
-// 				document.location = '#bap';
-				container.hide();
+				$('.modal').hide();
 				$('#mask').hide();
+				// No need to continue updating our availability if the contact window is not up
+				if( AVAIL_CHECK !== 'undefined' ) AVAIL_CHECK.clearInterval();
 			}
 		}
 	});
 	$('#showMaestro').on('click', function(e)
 	{
 		e.preventDefault();
+		// If another modal is opened, close it now.
+		if( $('.modal').is( ':visible' ) )
+		{
+			$('.modal').hide();
+		}
 		$('#maestro').show();
 		$('#mask').show();
 	});
 	
-	$('#maestro .close, #maestro .button').on('click', function()
+	$('.modal .close, .modal .button').on('click', function()
 	{
-		$('#maestro').hide();
+		$('.modal').hide();
 		$('#mask').hide();
+		if( AVAIL_CHECK !== 'undefined' ) AVAIL_CHECK.clearInterval();
 	});
 	
 	// Does not work :-(
@@ -480,6 +508,70 @@ $(document).ready(function()
 		}
 		propagateLang( $(this).val() );
 	});
+	
+	$('.showContact').on('click', function()
+	{
+		if( $('.modal').is( ':visible' ) )
+		{
+			$('.modal').hide();
+		}
+		$('#contact').show();
+		$('#mask').show();
+		availability();
+		window.AVAIL_CHECK = setInterval(availability,60000);
+	});
+	
+	$('.e-mail').on('click', function(e)
+	{
+		if( !$(this).data('decoded') )
+		{
+			e.preventDefault();
+			function decode(a, r) 
+			{
+				return a.split( '' ).reverse().join( '' );
+			};
+			var y = decode( $(this).data('user') ) + '@' + decode( $(this).data('website') );
+			$(this).attr("href", 'mai' + 'lto:' + y);
+			$(this).data( 'decoded', true );
+			window.location.href = 'mai' + 'lto:' + y;
+		}
+	});
+	
+	function getLocalDateTime()
+	{
+		var date = new Date();
+		var d = moment.utc(date.toISOString());
+		if( !sessionStorage.getItem('timezone') ) 
+		{
+			var tz = jstz.determine() || 'UTC';
+			sessionStorage.setItem('timezone', tz.name());
+		}
+		var currTz = sessionStorage.getItem('timezone');
+		return( d.tz(currTz) );
+	}
+	
+	function availability()
+	{
+		if( $('#contact').is(':visible') )
+		{
+			var d = getLocalDateTime();
+			var d2 = d.clone().tz( TZ );
+			d.locale( $(':root').attr( 'lang' ) );
+			d2.locale( $(':root').attr( 'lang' ) );
+			var localeAvailability = '';
+			if( d.tz.name != TZ ) localeAvailability += sprintf( l10n[ $(':root').attr( 'lang' ) ][ 'Your datetime' ], d.format( 'LLLL' ), d2.format('LLLL') );
+			if( d2.format('H') >= 9 && d2.format('H') <= 20 && 
+				!( d2.format('d') == 0 || d2.format('d') == 1 ) )
+			{
+				localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are opened' ];
+			}
+			else
+			{
+				localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are closed' ];
+			}
+			$('#availability').html( localeAvailability );
+		}
+	}
 });
 		</script>
 	</head>
@@ -517,7 +609,7 @@ $(document).ready(function()
 			<a href="#mission"><span lang="fr-FR">Mission</span><span lang="en-GB">Mission</span><span lang="ja-JP">ミッション</span></a>
 			<a href="#bap"><span lang="fr-FR">Networking</span><span lang="en-GB">Networking</span><span lang="ja-JP">ネットワーキング</span></a>
 			<a href="#membership"><span lang="fr-FR">Membre</span><span lang="en-GB">Membership</span><span lang="ja-JP">会員</span></a>
-			<a><span lang="fr-FR">Contact</span><span lang="en-GB">Contact Us</span><span lang="ja-JP">お問い合わせ</span></a>
+			<a class="showContact"><span lang="fr-FR">Contact</span><span lang="en-GB">Contact Us</span><span lang="ja-JP">お問い合わせ</span></a>
 			<div id="langMenuPrefix">
 				<span lang="fr-FR">Langues</span><span lang="en-GB">Languages</span><span lang="ja-JP">言語</span>
 			</div>
@@ -682,12 +774,12 @@ $(document).ready(function()
 			<div class="align">
 				<div class="footer-nav">
 					<h3>About Us</h3>
-					<a>The team</a>
-					<a>Our mission and values</a>
-					<a>Jobs</a>
-					<a>Investors Relations</a>
-					<a>Press</a>
-					<a>Contact us</a>
+					<a href="https://corp.angels-inc.com/#team">The team</a>
+					<a href="https://corp.angels-inc.com/#mission">Our mission and values</a>
+					<a href="https://corp.angels-inc.com/#jobs">Jobs</a>
+					<a href="https://corp.angels-inc.com/#ir">Investors Relations</a>
+					<a href="https://corp.angels-inc.com/#pr">Press</a>
+					<a class="showContact">Contact us</a>
 				</div>
 				<div class="footer-nav">
 					<h3>Services</h3>
@@ -723,13 +815,13 @@ $(document).ready(function()
 				</div>
 			</div>
 		</footer>
-		<div id="maestro">
+		<div id="maestro" class="modal">
 			<a href="#close" title="Close" class="close">X</a>
 			<div class="header">
 				<h2>Guy Perryman</h2>
 			</div>
 			<div class="body">
-<img src="Guy_Perryman.png" alt="Guy Perryman" /><p>Guy Perryman is a British radio broadcaster, voice actor and events promoter who has DJ'd for royalty including HRH Prince William and interviewed rock royalty including Sir Paul McCartney.</p>
+				<img src="Guy_Perryman.png" alt="Guy Perryman" /><p>Guy Perryman is a British radio broadcaster, voice actor and events promoter who has DJ'd for royalty including HRH Prince William and interviewed rock royalty including Sir Paul McCartney.</p>
 <p>Appointed MBE in the British New Year Honours list 2017 for services to British music in Japan. Awarded Person of the Year at the British Chamber of Commerce in Japan, British Business Awards 2013 for promoting British music, fashion and culture in Japan.</p>
 <p>Based in Tokyo since 1990 when brought to Japan as DJ for the launch of Virgin Megastores.<br />
 In 2013 was the world’s first person to DJ regularly on board commercial airline flights with Virgin Atlantic Airways between Tokyo and London.</p>
@@ -739,6 +831,62 @@ His voice can be heard on NHK World TV programs, a number of product commercials
 DJ and MC for many corporate experiences including for Dom Perignon, Globe-Trotter and British Embassy Tokyo.<br />
 1983-1990 DJ at 2SER FM, 2JJJ FM and Virgin Megastores in Sydney, Australia.<br />
 Born 1965 in Scotland to English parents, raised in Singapore and Australia.</p>
+			</div>
+			<div class="footer">
+				<button class="button">Close</button>
+			</div>
+		</div>
+		<div id="contact" class="modal">
+			<a href="#close" title="Close" class="close">X</a>
+			<div class="header">
+				<h2>Contact Information</h2>
+			</div>
+			<div class="body">
+				<section>
+					<h3>Corporate headquarters</h3>
+					<ul>
+						<li class="icon icon-home">
+							Nakabayashi Bldg. 2F<br />
+							2-11 Kandatacho, Chiyoda-ku<br />
+							Tokyo 101-0046<br />
+							Japan<br />
+							<span id="availability"></span>
+						</li>
+					</ul>
+				</section>
+				<section>
+						<h3>General inquiry</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail: <a href="mailto:click:the.address@will.be.decrypted.com" data-user="olleh" data-website="moc.cni-slegna" class="e-mail"></a>
+						</li>
+						<li class="icon icon-phone">
+							Phone: +81-(0)50-5305-7299
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Press relation</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail: <a href="mailto:click:the.address@will.be.decrypted.com" data-user="rp" data-website="moc.cni-slegna" class="e-mail"></a>
+						</li>
+						<li class="icon icon-phone">
+							Phone: +81-(0)50-5305-7299
+						</li>
+					</ul>
+				</section>
+				<section>
+					<h3>Sales inquiry</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail: <a href="mailto:click:the.address@will.be.decrypted.com" data-user="selas" data-website="moc.cni-slegna" class="e-mail"></a>
+						</li>
+						<li class="icon icon-phone">
+							Phone: +81-(0)50-5305-7299
+						</li>
+					</ul>
+				</section>
 			</div>
 			<div class="footer">
 				<button class="button">Close</button>
