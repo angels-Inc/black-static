@@ -388,29 +388,6 @@ $(document).ready(function()
 		createCookie( name, "", -1, "/" );
 	}
 	
-	var cookieName = 'baCookie';
-	var cookieData = getCookie(cookieName, true);
-	if( cookieData.lang )
-	{
-		propagateLang( cookieData.lang );
-	}
-	
-	$('nav a').on('click', function()
-	{
-		//var hash = window.location.hash;
-		var hash = $(this).hash;
-		$( 'nav a' ).each(function(i,e) 
-		{
-            // checks if its the same on the address bar
-			if( hash != e.hash ) 
-			{ 
-				$(this).removeClass( 'active' );
-			}
-		});
-		$(this).addClass( 'active' );
-	});
-	
-	propagateThisSiteLang();
 	window.propagateLang = function( selectedLang )
 	{
 		var langLower = new String( selectedLang ).toLowerCase();
@@ -443,6 +420,29 @@ $(document).ready(function()
 		}
 	};
 	
+	var cookieName = 'baCookie';
+	var cookieData = getCookie(cookieName, true);
+	if( cookieData.lang )
+	{
+		propagateLang( cookieData.lang );
+	}
+	
+	$('nav a').on('click', function()
+	{
+		//var hash = window.location.hash;
+		var hash = $(this).hash;
+		$( 'nav a' ).each(function(i,e) 
+		{
+            // checks if its the same on the address bar
+			if( hash != e.hash ) 
+			{ 
+				$(this).removeClass( 'active' );
+			}
+		});
+		$(this).addClass( 'active' );
+	});
+	
+	propagateThisSiteLang();
 	function propagateThisSiteLang()
 	{
 		if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
