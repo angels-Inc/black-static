@@ -536,7 +536,7 @@ $(document).ready(function()
 	{
 		$('.modal').hide();
 		$('#mask').hide();
-		if( AVAIL_CHECK !== 'undefined' ) AVAIL_CHECK.clearInterval();
+		if( window.AVAIL_CHECK !== 'undefined' ) window.AVAIL_CHECK.clearInterval();
 	});
 	
 	// Does not work :-(
@@ -854,7 +854,7 @@ Born 1965 in Scotland to English parents, raised in Singapore and Australia.</p>
 							2-11 Kandatacho, Chiyoda-ku<br />
 							Tokyo 101-0046<br />
 							Japan<br />
-							<span id="availability"></span>
+							<div id="availability"></div>
 						</li>
 					</ul>
 				</section>
