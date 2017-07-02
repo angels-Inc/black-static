@@ -761,7 +761,7 @@
 						$('.modal').hide();
 						$('#mask').hide();
 						// No need to continue updating our availability if the contact window is not up
-						if (AVAIL_CHECK !== 'undefined') AVAIL_CHECK.clearInterval();
+						if (window.AVAIL_CHECK !== 'undefined') window.AVAIL_CHECK.clearInterval();
 					}
 				}
 			});
@@ -778,7 +778,7 @@
 			$('.modal .close, .modal .button').on('click', function () {
 				$('.modal').hide();
 				$('#mask').hide();
-				if (AVAIL_CHECK !== 'undefined') AVAIL_CHECK.clearInterval();
+				if (window.AVAIL_CHECK !== 'undefined') window.window.AVAIL_CHECK.clearInterval();
 			});
 
 			// Does not work :-(
