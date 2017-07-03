@@ -665,26 +665,27 @@ $(document).ready(function()
 	$(window).scroll(function()
 	{
 		// Get container scroll position
-		var fromTop = $(this).scrollTop() + topMenuHeight;
+		var fromTop = $(this).scrollTop()+ topMenuHeight;
    
 		// Get id of current scroll item
 		var cur = scrollItems.map(function()
 		{
 			if( $(this).offset().top < fromTop )
-			  return this;
+				return this;
 		});
 		// Get the id of the current element
-		cur = cur[ cur.length - 1 ];
-		var id = cur && cur.length ? cur[0].id : '';
+		cur = cur[cur.length-1];
+		var id = cur && cur.length ? cur[0].id : "";
+		//console.log( "Processing id " + id + " versus lastId " + lastId );
    
 		if( lastId !== id ) 
 		{
 			lastId = id;
+			//console.log( "Remove class 'active' and sets it on " + id );
 			// Set/remove active class
-			menuItems
-			  .removeClass('active')
-			  .end().filter('[href="#' + id + '"]').addClass('active');
-		}
+			menuItems.removeClass("active");
+			menuItems.filter('[href="#' + id + '"]' ).addClass( 'active' );
+	   }                   
 	});
 });
 		</script>
