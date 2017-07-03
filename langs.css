@@ -33,7 +33,7 @@ And almost completely modified to only use css3 by Jacques Deguest
 .xlang > form > div
 {
 	border: 1px solid #fff; /* for the web browsers not understanding rgba */
-	border: 1px solid rgba(0,0,0,0.4);
+	border: 1px solid rgba(66,165,245,0.7);
     /* border: solid 1px #666;*/
     background: #fff;
     transition: all .25s ease-in;
