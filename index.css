@@ -542,7 +542,7 @@ footer .footer-policy br
 	font-size: 12px;
 }
 
-/* 
+/* This was the old css3 only fashion way, but unfortunately I could not position the modal window in the center of the page at the position where it was clicked. JavaScript was necessary for that.
 #maestro:target, #maestro:target + #mask
 {
     display: block;
