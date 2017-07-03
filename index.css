@@ -930,7 +930,7 @@ img.bapVideo
 	        transform: rotate(-45deg);
 }
 
-.e-mail:before 
+.courriel:before 
 {
 	content: attr(data-website) "\0040" attr(data-user);
 	unicode-bidi: bidi-override;
