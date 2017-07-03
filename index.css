@@ -288,6 +288,7 @@ main section#intro
 	background-color: hsla(0,0%,100%,0.20);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
+    background-position: center center;
 }
 
 main section#intro .center 
