@@ -285,7 +285,7 @@ main section#intro
 	padding-top: 70px;
 	background-image: url(ft.jpg);
 	background-size: cover;
-	background-color: hsla(0,0%,100%,0.20);
+	background-color: rgba(0,0,0,0.2);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-position: center center;
@@ -306,16 +306,9 @@ main section#intro h1
 	display: block;
 	width: 100%;
 	padding: 0px 40px;
-	color: rgba(217, 23, 23, 1);
+	color: rgba(255,255,255,1);
 	font-size: 3em;
 	font-weight: 900;
-	/* Carved effet */
-	color: transparent;
-	text-shadow: rgba(255,255,255,0.5) 0px 3px 3px;
-	background-color: rgba(217, 23, 23, 1);
-	-webkit-background-clip: text;
-	   -moz-background-clip: text;
-	        background-clip: text;
 }
 
 main section#intro h1.top 
