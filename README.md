@@ -268,4 +268,4 @@ The CSS file [langs.css](./langs.css) contains all the specifications including 
 1. Remove the unused language from the menu as they are here just to test
 1. ~~Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected~~ (fix #6)
 
-See <https://github.com/angels-Inc/black-static/issues> for more
+See <https://github.com/angels-Inc/black-static/issues> for more !
