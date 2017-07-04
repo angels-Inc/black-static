@@ -1045,9 +1045,6 @@ img.bapVideo
 	#intro h1 
 	{
 		font-size: 1.7em;
-/* 
-		padding: 0px !important;
- */
 	}
 	
 	section h2 
@@ -1081,7 +1078,7 @@ img.bapVideo
 	{
 		position: absolute;
 		right: 0;
-		width: 70%;
+		width: 80%;
 		height: 100%;
 	}
 
@@ -1125,8 +1122,8 @@ img.bapVideo
 		position: fixed;
 		z-index: 4;
 		top: 70px;
-		left: -30%;
-		width: 30%;
+		left: -20%;
+		width: 20%;
 		height: 100%;
 		background: white !important;
 		-webkit-transition: all 300ms ease;
@@ -1137,7 +1134,9 @@ img.bapVideo
 	nav a 
 	{
 		display: block !important;
-		height: 70px !important;
+		height: 35px !important;
+		padding: 20px 15px;
+		line-height: 0px;
 		color: #42A5F5 !important;
 		text-align: center;
 		background: white;
@@ -1198,29 +1197,26 @@ img.bapVideo
 	nav #langMenuPrefix
 	{
 		display: inline-block;
+		width: 100%;
 		color: #42A5F5;
 		text-align: center;
-		width: 100%;
 	}
 	
 	nav #langMenuPrefix:before
 	{
 		display: inline-block;
+		content: "";
 		width: 100%;
 		height: 2px;
 		background: #42A5F5;
 		border-bottom: 1px solid rgba(255,255,255,0.5);
 		border-top: 1px solid rgba(0,0,0,0.5);
-		content: "";
 	}
 	
 	nav .xlang
 	{
 		width: 100%;
 		margin: 0 auto;
-/* 
-		text-align: center;
- */
 	}
 	
 	nav .xlang > form > div
@@ -1232,12 +1228,18 @@ img.bapVideo
 	nav .xlang:not([open]) ul
 	{
 		display: inline-block !important;
+		top: 0px;
 		border: none !important;
 		clip: initial;
 		width: 90%;
 		margin: 0 auto;
-		padding: 0 20px;
+		padding: 0;
 		text-align: initial;
+	}
+	
+	nav .xlang ul li
+	{
+		width: 100%;
 	}
 }
 
