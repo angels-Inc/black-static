@@ -234,6 +234,7 @@ $('input[name=lang]').on( 'change', function(e)
 ```
 
 ## Localisation (L10N)
+### Formatting and structure
 The Localisation follows the CSS3 standards, ie to localise from the loading the document into either British English, French or Japanese, set the html tag to the iso639 code such as:
 ``` html
 <html lang="en-GB">
@@ -262,10 +263,15 @@ The language code naming standards must be language-Country Code and in the case
 
 The CSS file [langs.css](./langs.css) contains all the specifications including the base 64 encoded country flags so there is no need to keep in mind to also copy whatever country flags are necessary. However, since there are over 250 countries, I only added the country flags of Asian countries.
 
+### User interface
+The language change selector is located at the top right, which is the expected location according to [this user study](http://flagsarenotlanguages.com/blog/2013/10/case-study-onefinestay-com-and-dropdown-language-selection/).
+Once the language is set, it is remembered as a session information stored in the client-side.
+
 ## To do
 1. Build the icons referenced in the header
 1. Create a robots.txt file
 1. Remove the unused language from the menu as they are here just to test
 1. ~~Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected~~ (fix #6)
+1. Set overflow to default for the mobile version so the menu can be scrolled
 
 See <https://github.com/angels-Inc/black-static/issues> for more
