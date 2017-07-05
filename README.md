@@ -274,4 +274,4 @@ Once the language is set, it is remembered as a session information stored in th
 1. ~~Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected~~ (fix #6)
 1. Set overflow to default for the mobile version so the menu can be scrolled
 
-See <https://github.com/angels-Inc/black-static/issues> for more
+See <https://github.com/angels-Inc/black-static/issues> for more !
