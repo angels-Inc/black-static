@@ -1129,7 +1129,6 @@ img.bapVideo
 		-webkit-transition: all 300ms ease;
 		   -moz-transition: all 300ms ease;
 		        transition: all 300ms ease;
-		cursor: pointer;
 	}
 	
 	nav a 
@@ -1141,6 +1140,7 @@ img.bapVideo
 		color: #42A5F5 !important;
 		text-align: center;
 		background: white;
+		cursor: pointer;
 	}
 	
 	nav a:hover 
