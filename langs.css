@@ -97,7 +97,10 @@ And almost completely modified to only use css3 by Jacques Deguest
 .xlang input:checked[value="vi-VN"] ~ ul li label[code="vi-VN"]
 {
 	color: #fff;
+	background: #42A5F5;
+/* 
 	background: #0088CC;
+ */
 }
 
 /* 

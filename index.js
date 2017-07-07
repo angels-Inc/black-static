@@ -115,6 +115,17 @@ $(document).ready(function()
 			cookieData.lang = selectedLang;
 			setCookie(cookieName, cookieData);
 		}
+		console.log("Current lang is: " + $(':root').attr( 'lang' ).toLowerCase() );
+		if( typeof( $('.playVideo').attr('data-video-' + $(':root').attr( 'lang' ).toLowerCase() ) ) !== "undefined" )
+		{
+			$('.playVideo').data('video-id', $('.playVideo').attr('data-video-' + $(':root').attr( 'lang' ).toLowerCase() ) );
+			console.log( "Found locale Youtube video. Yeah! " + $('.playVideo').data('video-id') );
+		}
+		else
+		{
+			console.log( "Falling back on the default Youtube video: " + $('.playVideo').data('video-def') );
+			$('.playVideo').data('video-id', $('.playVideo').data('video-def') );
+		}
 	};
 	
 	var cookieName = 'baCookie';
@@ -324,7 +335,7 @@ $(document).ready(function()
 			{
 				localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are closed' ];
 			}
-			$('#availability').html( localeAvailability );
+			$('.availability').html( localeAvailability );
 		}
 	}
 	
@@ -349,13 +360,13 @@ $(document).ready(function()
 	// so we can get a fancy scroll animation
 	menuItems.click(function(e)
 	{
+		e.preventDefault();
 		var href = $(this).attr( 'href' ),
 		offsetTop = href === '#' ? 0 : $(href).offset().top-topMenuHeight + 1;
 		$('html, body').stop().animate(
 		{ 
 			scrollTop: offsetTop
 		}, 850);
-		e.preventDefault();
 	});
 
 	// Bind to scroll
