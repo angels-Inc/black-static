@@ -17,10 +17,12 @@ jquery.hoverIntent.js | jQuery plugin to improve from the $.hover() function by 
 magnific-popup | The magnific popup directory from Dmitry Semenov <http://dimsemenov.com/plugins/magnific-popup/>
 jquery.magnific-popup.min.js | The JavaScript of Magnific popup
 magnific-popup.css | The CSS for Magnific popup
+sprintf.js | The JavaScript library used to format localised characters strings in the contact popup.
+Tokyo.jpg | The background image used in the contact popup
 
 
 ## JavaScript
-There is limited use of JavaScript in this document. I have made heavy use of pure CSS3 features. jQuery is used to provide some additional features proportionally to what is needed to provide the user an easy-to-use and convenient interface. No gadget here.
+There was limited use of JavaScript in this document, but to improve usability more of it has been used while only using it as a glue to keep it lightweight. No fancy computation or whatever. I have made heavy use of pure CSS3 features. jQuery is used to provide some additional features proportionally to what is needed to provide the user an easy-to-use and convenient interface. No gadget here.
 On Tuesday 4 July 2017, I moved the inline script code to an [external file](./index.js) for better maintenance.
 
 ### On load
