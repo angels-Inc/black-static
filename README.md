@@ -21,6 +21,7 @@ magnific-popup.css | The CSS for Magnific popup
 
 ## JavaScript
 There is limited use of JavaScript in this document. I have made heavy use of pure CSS3 features. jQuery is used to provide some additional features proportionally to what is needed to provide the user an easy-to-use and convenient interface. No gadget here.
+On Tuesday 4 July 2017, I moved the inline script code to an [external file](./index.js) for better maintenance.
 
 ### On load
 This is used to display a loading page visual instead of having nothing going on. It usually displays for a couple seconds.
@@ -43,15 +44,74 @@ This sets the available languages and is used by the propagateLang() function to
 ``` JavaScript
 window.l10n = {
 'en-GB'	: {
-  'Undefined' : 'Undefined'
+	'Undefined' : 'Undefined',
+	'Your datetime' : 'Your current local date and time are: %s and it is %s in Tokyo. ',
+	'We are opened' : 'We are available. Feel free to call us or send us a mail and we will reply quickly.',
+	'We are closed' : 'Sorry, this is outside of our business hours. Please send us a mail and we will get back to you quickly.'
   },
 'fr-FR'	: {
-  'Undefined' : 'Indéfini'
+	'Undefined' : 'Indéfini',
+	'Your datetime' : 'Votre date et heure actuelles sont : %s et il est %s à Tokyo. ',
+	'We are opened' : "Nous sommes disponibles. N'hésitez pas à nous appeler ou nous envoyer un courriel et nous répondrons rapidement.",
+	'We are closed' : "Désolé, c'est en dehors de nos heures de bureau. Envoyez-nous un courriel et nous vous répondrons rapidement."
   },
 'ja-JP' : {
-  'Undefined' : '未定義値'
+	'Undefined' : '未定義値',
+	'Your datetime' : '現在、そちらの時間は%sですが、東京では%sになっております。',
+	'We are opened' : '弊社営業時間内ですので、ぜひご架電もしくはメールを配信してください。早くご回答させていただくよう努力します。',
+	'We are closed' : 'すみませんが、営業時間外ですので、後ほどご架電していただくか、メールの配信していただければ早くご回答させていただくよう努力します。'
   }
 };
+```
+
+This is used to set our time zone to guess our visitor's one and do some time computation shown on the contact popup overlay.
+``` JavaScript
+window.TZ = 'Asia/Tokyo';
+```
+
+Then, we have the cookie functions, which we use because sessionStorage or localStorage are nnice but do not last nearly as long and for the convenience of the user, we want to make sure he can keep his preferred language when he visits us.
+``` JavaScript
+window.setCookie = function(cname, cvalue, exdays)
+{
+	// Set expiry to 1 month by default
+	if( exdays === undefined ) exdays = 30;
+	var d = new Date();
+	d.setTime( d.getTime() + (exdays * 24 * 60 * 60 * 1000) );
+	var expires = "expires=" + d.toUTCString();
+	cvalue = encodeURIComponent( JSON.stringify( cvalue ) );
+	document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
+}
+
+window.getCookie = function(cname, json)
+{
+	var name = cname + "=";
+	var ca = document.cookie.split(';');
+	var thisCookie = "";
+	for(var i = 0; i < ca.length; i++)
+	{
+		var c = ca[i];
+		while( c.charAt(0) == ' ' ) c = c.substring(1);
+		if( c.indexOf(name) == 0 )
+		{
+			thisCookie = c.substring( name.length, c.length );
+			break;
+		}
+	}
+	if( thisCookie.length )
+	{
+		thisCookie = decodeURIComponent(thisCookie.replace(/\+/g,  " "));
+		return( json ? $.parseJSON( thisCookie ) : thisCookie );
+	}
+	else
+	{
+		return( json ? {} : "" );
+	}
+}
+
+window.eraseCookie = function(name)
+{
+	createCookie( name, "", -1, "/" );
+}
 ```
 
 This is used to set the menu item as selected if the page was opened with an anchor in it, ie with a target to a section of the page
@@ -70,6 +130,78 @@ if( window.location.hash.length )
       $(this).removeClass( 'active' );
     }
   });
+}
+```
+
+Next is the localisation propagation based on the interface language active. This makes uses of the standard css :lang selector.
+``` JavaScript
+window.propagateLang = function( selectedLang )
+	{
+		if( typeof( l10n[ selectedLang ] ) === 'undefined' )
+		{
+			return;
+		}
+		var langLower = new String( selectedLang ).toLowerCase();
+		$(':root').attr( 'lang', selectedLang );
+		if( $('input[name="lang"][value="' + selectedLang + '"]').length )
+		{
+			$('input[name="lang"][value="' + selectedLang + '"]').prop( 'checked', true );
+		}
+		$('title').text( $('title').data( langLower ) );
+		$('input,textarea,select').each(function()
+		{
+			var eType = $(this).type || this.tagName.toLowerCase();
+			var eName = $(this).attr('name');
+			thisLang = new String( $(this).attr('lang') );
+			if( typeof( thisLang ) != typeof( undefined ) &&
+				thisLang !== false &&
+				thisLang != 'undefined' &&
+				thisLang.length > 0 )
+			{
+				if( $(this).attr('lang') == selectedLang )
+				{
+					$(this).attr( 'disabled', false );
+				}
+				else
+				{
+					$(this).attr( 'disabled', 'disabled' );
+				}
+			}
+		});
+
+		if( cookieData.lang != selectedLang )
+		{
+			cookieData.lang = selectedLang;
+			setCookie(cookieName, cookieData);
+		}
+		console.log("Current lang is: " + $(':root').attr( 'lang' ).toLowerCase() );
+	};
+
+	function propagateThisSiteLang(lang)
+	{
+		if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
+		{
+			propagateLang( lang );
+			console.log( "Found " + $('div.video[lang]:visible .playVideo').length + " div[lang] visible." );
+		}
+		else
+		{
+			setTimeout( propagateThisSiteLang(lang), 500 );
+		}
+	}
+```
+
+Then, we have this bit of code to check if the user session has already a language recorded and if so, we set the language as it was. Otherwise we propagate the language set in the html tag.
+``` JavaScript
+var cookieName = 'baCookie';
+var cookieData = getCookie(cookieName, true);
+if( cookieData.lang )
+{
+	propagateThisSiteLang( cookieData.lang );
+}
+else
+{
+	propagateThisSiteLang( $(':root').attr( 'lang' ) );
 }
 ```
 
@@ -92,80 +224,154 @@ $('nav a').on('click', function()
 });
 ```
 
-Next is the localisation propagation based on the interface language active. This makes uses of the standard css :lang selector.
+This code is to handle the navigation menu click and render a smooth scrolling. But not just, it also keeps track in history of the link and associated language, so that if one views a page A in en-GB then switch to ja-JP to view page B, and then press the web browser back button, the page A in English and not in Japanese will be displayed !
 ``` JavaScript
-propagateThisSiteLang();
-window.propagateLang = function( selectedLang )
-{
-  var langLower = new String( selectedLang ).toLowerCase();
-  $(':root').attr( 'lang', selectedLang );
-  $('title').text( $('title').data( langLower ) );
-  $('input,textarea,select').each(function()
-  {
-    var eType = $(this).type || this.tagName.toLowerCase();
-    var eName = $(this).attr('name');
-    thisLang = new String( $(this).attr('lang') );
-    if( typeof( thisLang ) != typeof( undefined ) &&
-      thisLang !== false &&
-      thisLang != 'undefined' &&
-      thisLang.length > 0 )
-    {
-      if( $(this).attr('lang') == selectedLang )
-      {
-        $(this).attr( 'disabled', false );
-      }
-      else
-      {
-        $(this).attr( 'disabled', 'disabled' );
-      }
-    }
-  });
-};
+var lastId,
+	topMenu = $('nav'),
+	topMenuHeight = topMenu.outerHeight() + 1,
+	// All list items, but only anchors items as pointed out by Julian K. in StackOverflow
+	menuItems = topMenu.find( 'a[href^="#"]' ),
+	// Anchors corresponding to menu items
+	scrollItems = menuItems.map(function()
+	{
+	var item = $( $(this).attr( 'href' ) );
+	if( item.length ) { return item; }
+	});
 
-function propagateThisSiteLang()
+console.log( "topMenuHeight: " + topMenuHeight + " and bap offset top is : " + $('#bap').offset().top );
+// Bind click handler to menu items
+// so we can get a fancy scroll animation
+menuItems.click(function(e)
 {
-  if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
-  {
-    propagateLang( $(':root').attr('lang') );
-  }
-  else
-  {
-    setTimeout( propagateThisSiteLang, 1000 );
-  }
+	e.preventDefault();
+	var href = $(this).attr( 'href' );
+	scrollAnimate(href);
+	if( window.history.pushState )
+	{
+		if( href.indexOf( document.domain ) > -1 ||
+			href.indexOf(':') === -1 )
+		{
+			//console.log( "Adding url " + href + " to history with language " + $(':root').attr('lang') );
+			window.history.pushState({"url": href, "lang": $(':root').attr('lang')}, "", href);
+			return false;
+		}
+	}
+});
+
+window.scrollAnimate = function(href)
+{
+	var offsetTop = -1;
+	if( href === '#' )
+	{
+		offsetTop = 0;
+		console.log( "Smooth scrolling down to " + offsetTop + " for " + href );
+		$('html, body').stop().animate(
+		{
+			scrollTop: offsetTop
+		}, 850);
+	}
+	else if( $(href).length )
+	{
+		var checkObj = function()
+		{
+			if( $(href).offset().top > 0 )
+			{
+				console.log( "Div " + href + " is " + $(href).offset().top + " from top." );
+				offsetTop = $(href).offset().top - topMenuHeight + 1;
+				console.log( "Smooth scrolling down to " + offsetTop + " for " + href );
+				$('html, body').stop().animate(
+				{
+					scrollTop: offsetTop
+				}, 850);
+			}
+			else
+			{
+				console.log( href + " still has offset to 0. Waiting 0.2 seconds." );
+				setTimeout(checkObj,200);
+			}
+		};
+		checkObj();
+	}
 }
 
-if( typeof( l10n[ $(':root').attr( 'lang' ) ] ) != 'undefined' )
+// Bind to scroll
+$(window).scroll(function()
 {
-  propagateLang( $(':root').attr( 'lang' ) );
+	// Get container scroll position
+	var fromTop = $(this).scrollTop()+ topMenuHeight;
+
+	// Get id of current scroll item
+	var cur = scrollItems.map(function()
+	{
+		if( $(this).offset().top < fromTop )
+			return this;
+	});
+	// Get the id of the current element
+	cur = cur[cur.length-1];
+	var id = cur && cur.length ? cur[0].id : "";
+	//console.log( "Processing id " + id + " versus lastId " + lastId );
+
+	if( lastId !== id )
+	{
+		lastId = id;
+		//console.log( "Remove class 'active' and sets it on " + id );
+		// Set/remove active class
+		menuItems.removeClass("active");
+		menuItems.filter('[href="#' + id + '"]' ).addClass( 'active' );
+	 }                   
+});
+
+// If we are called with an anchor in the url, make sure we show the corresponding menu item as selected
+if( window.location.hash.length )
+{
+	var hash = window.location.hash;
+	$( 'nav a' ).each(function(i,e)
+	{
+		if( hash == e.hash )
+		{
+			$(this).addClass( 'active' );
+			console.log( "Found a direct entry link to " + window.location.hash + ", moving to " + $(this).attr('href') );
+			scrollAnimate( $(this).attr('href') );
+		}
+		else
+		{
+			$(this).removeClass( 'active' );
+		}
+	});
 }
 ```
 
 I spent quite some time to find this information, because the documentation of magnificPopup is not very complete. So after hours of search, I found this pen at <https://codepen.io/meladq/pen/CLqtk>
+But since we have video in different language, it is not sufficient to work. We have to control ourself which video should be displayed instead of delegating it to magnific popup. So we monitor click ourself and open magnific popup ourself.
 ``` JavaScript
-$('.playVideo').magnificPopup(
+$('div.video[lang] .playVideo').on('click',function()
 {
-  items:
-  {
-    src: 'https://www.youtube.com/watch?v=' + $('.playVideo').data('video-id')
-  },
-  type: 'iframe',
-  iframe:
-  {
-      markup: '<div class="mfp-iframe-scaler">'+
-              '<div class="mfp-close"></div>'+
-              '<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
-              '</div>',
-    patterns:
-    {
-      youtube:
-      {
-        index: 'youtube.com/',
-        id: 'v=',
-        src: 'https://www.youtube.com/embed/%id%?autoplay=1&rel=0'
-          }
-    },
-    srcAction: 'iframe_src',
-  }
+	console.log( "Got a click from this div whose language is: " + $(this).parent().parent().attr('lang') + " and who has a class of " + $(this).attr('class') );
+	$(this).magnificPopup(
+	{
+		items:
+		{
+			src: 'https://www.youtube.com/watch?v=' + $(this).data('video-id')
+		},
+		type: 'iframe',
+		iframe:
+		{
+			markup: '<div class="mfp-iframe-scaler">'+
+					'<div class="mfp-close"></div>'+
+					'<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
+					'</div>',
+			patterns:
+			{
+				youtube:
+				{
+					index: 'youtube.com/',
+					id: 'v=',
+					src: 'https://www.youtube.com/embed/%id%?autoplay=1&rel=0'
+				}
+			},
+			srcAction: 'iframe_src',
+		},
+	}).magnificPopup('open');
 });
 ```
 
@@ -177,26 +383,53 @@ $(document).keyup(function(e)
   var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
   if( key == 27 )
   {
-    document.location='#bap';
+		$('.modal').hide();
+		$('#mask').hide();
   }
 });
 ```
 
-If a click is made outside of the "about Guy" popup layer, then it gets closed.
+If a click is made outside of the "about Guy" or the contact popup layer, then they get closed.
 ``` JavaScript
 $(document).on('click', function(e)
 {
-  var container  = $('#maestro');
-  if( container.is( ':visible' ) )
-  {
-    // if the target of the click isn't the container...
-    if( !container.is( e.target )
-      // ... nor a descendant of the container
-      && container.has( e.target ).length === 0 )
-    {
-      container.hide();
-    }
-  }
+	if( $('.modal').is( ':visible' ) )
+	{
+		// if the target of the click isn't the container...
+		if( !$('.modal').is( e.target )
+			// ... nor a descendant of the container
+			&& $('.modal').has( e.target ).length === 0 &&
+			!$('#showMaestro').is( e.target ) &&
+			!$('.showContact').is( e.target ) )
+		{
+			$('.modal').hide();
+			$('#mask').hide();
+			// No need to continue updating our availability if the contact window is not up
+			if( window.AVAIL_CHECK !== 'undefined' ) clearInterval(window.AVAIL_CHECK);
+		}
+	}
+});
+```
+
+Display the about Guy Perryman popup overlay
+``` JavaScript
+$('#showMaestro').on('click', function(e)
+{
+	e.preventDefault();
+	// If another modal is opened, close it now.
+	if( $('.modal').is( ':visible' ) )
+	{
+		$('.modal').hide();
+	}
+	$('#maestro').show();
+	$('#mask').show();
+});
+
+$('.modal .close, .modal .button').on('click', function()
+{
+	$('.modal').hide();
+	$('#mask').hide();
+	if( window.AVAIL_CHECK !== 'undefined' ) clearInterval(window.AVAIL_CHECK);
 });
 ```
 
@@ -229,7 +462,98 @@ $('input[name=lang]').on( 'change', function(e)
   {
     return false;
   }
-  propagateLang( $(this).val() );
+  propagateThisSiteLang( $(this).val() );
+});
+```
+
+If the contact popup is opened, we update every minute the availability information box.
+``` JavaScript
+$('.showContact').on('click', function()
+{
+	if( $('.modal').is( ':visible' ) )
+	{
+		$('.modal').hide();
+	}
+	$('#contact').show();
+	$('#mask').show();
+	availability();
+	window.AVAIL_CHECK = setInterval(availability,60000);
+});
+```
+
+This is a little trick to obfuscate an e-mail address, because it requires for the spam bot to 1) render the css properly and make a user click while a perfectly good, but fake e-mail address is in the href link as a bait. Real users will get the real e-mail, the bots will get a fake one. It uses standard css3 technique and a bit of JavaScript here to make the glue.
+The first time the user click, the fake e-mail address gets changed by the real one stored as inverted strings in data attributes !!
+``` JavaScript
+$('.courriel').on('click', function(e)
+{
+	if( !$(this).data('decoded') )
+	{
+		e.preventDefault();
+		function decode(a, r)
+		{
+			return a.split( '' ).reverse().join( '' );
+		};
+		var y = decode( $(this).data('user') ) + '@' + decode( $(this).data('website') );
+		$(this).attr("href", 'mai' + 'lto:' + y);
+		$(this).data( 'decoded', true );
+		window.location.href = 'mai' + 'lto:' + y;
+	}
+});
+```
+Those codes are used in the contact popup layer to show the availability of Angels, Inc office notwithstanding from which country the user visits us. This is important because with Internet, you do not know the local time of the company whose website you visit.
+``` JavaScript
+function getLocalDateTime()
+{
+	var date = new Date();
+	var d = moment.utc(date.toISOString());
+	if( !sessionStorage.getItem('timezone') )
+	{
+		var tz = jstz.determine() || 'UTC';
+		sessionStorage.setItem('timezone', tz.name());
+	}
+	var currTz = sessionStorage.getItem('timezone');
+	return( d.tz(currTz) );
+}
+
+function availability()
+{
+	if( $('#contact').is(':visible') )
+	{
+		var d = getLocalDateTime();
+		var d2 = d.clone().tz( TZ );
+		d.locale( $(':root').attr( 'lang' ) );
+		d2.locale( $(':root').attr( 'lang' ) );
+		var localeAvailability = '';
+		if( d.tz.name != TZ ) localeAvailability += sprintf( l10n[ $(':root').attr( 'lang' ) ][ 'Your datetime' ], d.format( 'LLLL' ), d2.format('LLLL') );
+		if( d2.format('H') >= 9 && d2.format('H') <= 20 &&
+			!( d2.format('d') == 0 || d2.format('d') == 1 ) )
+		{
+			localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are opened' ];
+		}
+		else
+		{
+			localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are closed' ];
+		}
+		$('.availability').html( localeAvailability );
+	}
+}
+```
+
+Monitor the user click on his/her web browser back or forward button so we can display the page in the right language. Nothing happens if the history feature is not supported by an old web browser.
+``` JavaScript
+$(window).on("popstate", function(e)
+{
+	var data = e.originalEvent.state;
+	if( data !== null )
+	{
+		var lang = data.lang;
+		//console.log( "Found page " + data.url + " with language " + data.lang );
+		if( lang != $(':root').attr( 'lang' ) )
+		{
+			//console.log( "Language in history (" + data.lang + ") is different than our current one, changing." );
+			propagateLang( lang );
+		}
+	}
 });
 ```
 
@@ -270,8 +594,10 @@ Once the language is set, it is remembered as a session information stored in th
 ## To do
 1. Build the icons referenced in the header
 1. Create a robots.txt file
-1. Remove the unused language from the menu as they are here just to test
+1. ~~Remove the unused language from the menu as they are here just to test~~
 1. ~~Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected~~ (fix #6)
 1. Set overflow to default for the mobile version so the menu can be scrolled
+1. Add the logo or other brand assets of the sponsors on the bottom of the page
+1. Add also the picture of key participants to influence others to join as well.
 
 See <https://github.com/angels-Inc/black-static/issues> for more !

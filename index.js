@@ -1,3 +1,7 @@
+/*
+Created by Jacques Deguest on June 2017
+(c) Angels, Inc 2017
+*/
 $(document).ready(function() 
 {
 	window.l10n = 
@@ -25,23 +29,6 @@ $(document).ready(function()
 		}
 	};
 	window.TZ = 'Asia/Tokyo';
-	
-	// If we are called with an anchor in the url, make sure we show the corresponding menu item as selected
-	if( window.location.hash.length )
-	{
-		var hash = window.location.hash;
-		$( 'nav a' ).each(function(i,e) 
-		{
-			if( hash == e.hash ) 
-			{ 
-				$(this).addClass( 'active' );
-			}
-			else
-			{
-				$(this).removeClass( 'active' );
-			}
-		});
-	}
 	
 	window.setCookie = function(cname, cvalue, exdays)
 	{
@@ -87,8 +74,16 @@ $(document).ready(function()
 	
 	window.propagateLang = function( selectedLang )
 	{
+		if( typeof( l10n[ selectedLang ] ) === 'undefined' )
+		{
+			return;
+		}
 		var langLower = new String( selectedLang ).toLowerCase();
 		$(':root').attr( 'lang', selectedLang );
+		if( $('input[name="lang"][value="' + selectedLang + '"]').length )
+		{
+			$('input[name="lang"][value="' + selectedLang + '"]').prop( 'checked', true );
+		}
 		$('title').text( $('title').data( langLower ) );
 		$('input,textarea,select').each(function()
 		{
@@ -110,29 +105,37 @@ $(document).ready(function()
 				}
 			}
 		});
+		
 		if( cookieData.lang != selectedLang )
 		{
 			cookieData.lang = selectedLang;
 			setCookie(cookieName, cookieData);
 		}
 		console.log("Current lang is: " + $(':root').attr( 'lang' ).toLowerCase() );
-		if( typeof( $('.playVideo').attr('data-video-' + $(':root').attr( 'lang' ).toLowerCase() ) ) !== "undefined" )
+	};
+	
+	function propagateThisSiteLang(lang)
+	{
+		if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
 		{
-			$('.playVideo').data('video-id', $('.playVideo').attr('data-video-' + $(':root').attr( 'lang' ).toLowerCase() ) );
-			console.log( "Found locale Youtube video. Yeah! " + $('.playVideo').data('video-id') );
+			propagateLang( lang );
+			console.log( "Found " + $('div.video[lang]:visible .playVideo').length + " div[lang] visible." );
 		}
 		else
 		{
-			console.log( "Falling back on the default Youtube video: " + $('.playVideo').data('video-def') );
-			$('.playVideo').data('video-id', $('.playVideo').data('video-def') );
+			setTimeout( propagateThisSiteLang(lang), 500 );
 		}
-	};
-	
+	}
+
 	var cookieName = 'baCookie';
 	var cookieData = getCookie(cookieName, true);
 	if( cookieData.lang )
 	{
-		propagateLang( cookieData.lang );
+		propagateThisSiteLang( cookieData.lang );
+	}
+	else
+	{
+		propagateThisSiteLang( $(':root').attr( 'lang' ) );
 	}
 	
 	$('nav a').on('click', function()
@@ -150,53 +153,155 @@ $(document).ready(function()
 		$(this).addClass( 'active' );
 	});
 	
-	propagateThisSiteLang();
-	function propagateThisSiteLang()
+	// Menu handling
+	// Credits: Marcus Ekwall
+	// url: <https://codepen.io/joxmar/pen/NqqMEg>
+	// url: <https://stackoverflow.com/questions/9979827/change-active-menu-item-on-page-scroll>
+	// Cache selectors
+	var lastId,
+	  topMenu = $('nav'),
+	  topMenuHeight = topMenu.outerHeight() + 1,
+	  // All list items, but only anchors items as pointed out by Julian K. in StackOverflow
+	  menuItems = topMenu.find( 'a[href^="#"]' ),
+	  // Anchors corresponding to menu items
+	  scrollItems = menuItems.map(function()
+	  {
+		var item = $( $(this).attr( 'href' ) );
+		if( item.length ) { return item; }
+	  });
+
+	console.log( "topMenuHeight: " + topMenuHeight + " and bap offset top is : " + $('#bap').offset().top );
+	// Bind click handler to menu items
+	// so we can get a fancy scroll animation
+	menuItems.click(function(e)
 	{
-		if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
+		e.preventDefault();
+		var href = $(this).attr( 'href' );
+		scrollAnimate(href);
+		if( window.history.pushState ) 
 		{
-			propagateLang( $(':root').attr('lang') );
-			if( $('input[name="lang"][value="' + $(':root').attr('lang') + '"]').length )
+			if( href.indexOf( document.domain ) > -1 || 
+				href.indexOf(':') === -1 )
 			{
-				$('input[name="lang"][value="' + $(':root').attr('lang') + '"]').prop( 'checked', true );
+				//console.log( "Adding url " + href + " to history with language " + $(':root').attr('lang') );
+				window.history.pushState({"url": href, "lang": $(':root').attr('lang')}, "", href);
+				return false;
 			}
 		}
-		else
+	});
+	
+	window.scrollAnimate = function(href)
+	{
+		var offsetTop = -1;
+		if( href === '#' )
 		{
-			setTimeout( propagateThisSiteLang, 1000 );
+			offsetTop = 0;
+			console.log( "Smooth scrolling down to " + offsetTop + " for " + href );
+			$('html, body').stop().animate(
+			{ 
+				scrollTop: offsetTop
+			}, 850);
+		}
+		else if( $(href).length )
+		{
+			var checkObj = function()
+			{
+				if( $(href).offset().top > 0 )
+				{
+					console.log( "Div " + href + " is " + $(href).offset().top + " from top." );
+					offsetTop = $(href).offset().top - topMenuHeight + 1;
+					console.log( "Smooth scrolling down to " + offsetTop + " for " + href );
+					$('html, body').stop().animate(
+					{ 
+						scrollTop: offsetTop
+					}, 850);
+				}
+				else
+				{
+					console.log( href + " still has offset to 0. Waiting 0.2 seconds." );
+					setTimeout(checkObj,200);
+				}
+			};
+			checkObj();
 		}
 	}
-	
-	if( typeof( l10n[ $(':root').attr( 'lang' ) ] ) != 'undefined' )
+
+	// Bind to scroll
+	$(window).scroll(function()
 	{
-		propagateLang( $(':root').attr( 'lang' ) );
+		// Get container scroll position
+		var fromTop = $(this).scrollTop()+ topMenuHeight;
+   
+		// Get id of current scroll item
+		var cur = scrollItems.map(function()
+		{
+			if( $(this).offset().top < fromTop )
+				return this;
+		});
+		// Get the id of the current element
+		cur = cur[cur.length-1];
+		var id = cur && cur.length ? cur[0].id : "";
+		//console.log( "Processing id " + id + " versus lastId " + lastId );
+   
+		if( lastId !== id ) 
+		{
+			lastId = id;
+			//console.log( "Remove class 'active' and sets it on " + id );
+			// Set/remove active class
+			menuItems.removeClass("active");
+			menuItems.filter('[href="#' + id + '"]' ).addClass( 'active' );
+	   }                   
+	});
+	
+	// If we are called with an anchor in the url, make sure we show the corresponding menu item as selected
+	if( window.location.hash.length )
+	{
+		var hash = window.location.hash;
+		$( 'nav a' ).each(function(i,e) 
+		{
+			if( hash == e.hash ) 
+			{ 
+				$(this).addClass( 'active' );
+				console.log( "Found a direct entry link to " + window.location.hash + ", moving to " + $(this).attr('href') );
+				scrollAnimate( $(this).attr('href') );
+			}
+			else
+			{
+				$(this).removeClass( 'active' );
+			}
+		});
 	}
 	
 	// Credits: https://codepen.io/meladq/pen/CLqtk
-	$('.playVideo').magnificPopup(
+	// This is because of localisation we have multiple .playVideo div but only one is active, ie the one of the currently displayed language.
+	$('div.video[lang] .playVideo').on('click',function()
 	{
-		items: 
+		console.log( "Got a click from this div whose language is: " + $(this).parent().parent().attr('lang') + " and who has a class of " + $(this).attr('class') );
+		$(this).magnificPopup(
 		{
-			src: 'https://www.youtube.com/watch?v=' + $('.playVideo').data('video-id')
-		},
-		type: 'iframe',
-		iframe: 
-		{
-	    	markup: '<div class="mfp-iframe-scaler">'+
-            		'<div class="mfp-close"></div>'+
-            		'<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
-            		'</div>', 
-			patterns: 
+			items: 
 			{
-				youtube: 
-				{
-					index: 'youtube.com/', 
-					id: 'v=', 
-					src: 'https://www.youtube.com/embed/%id%?autoplay=1&rel=0' 
-		        }
+				src: 'https://www.youtube.com/watch?v=' + $(this).data('video-id')
 			},
-			srcAction: 'iframe_src', 
-		}
+			type: 'iframe',
+			iframe: 
+			{
+				markup: '<div class="mfp-iframe-scaler">'+
+						'<div class="mfp-close"></div>'+
+						'<iframe class="mfp-iframe" frameborder="0" allowfullscreen></iframe>'+
+						'</div>', 
+				patterns: 
+				{
+					youtube: 
+					{
+						index: 'youtube.com/', 
+						id: 'v=', 
+						src: 'https://www.youtube.com/embed/%id%?autoplay=1&rel=0' 
+					}
+				},
+				srcAction: 'iframe_src', 
+			},
+		}).magnificPopup('open');
 	});
 
 	$(document).keyup(function(e) 
@@ -204,7 +309,6 @@ $(document).ready(function()
 		var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
 		if( key == 27 ) 
 		{
-// 			document.location='#bap';
 			$('.modal').hide();
 			$('#mask').hide();
 		}
@@ -218,7 +322,7 @@ $(document).ready(function()
 			if( !$('.modal').is( e.target )
 				// ... nor a descendant of the container
 				&& $('.modal').has( e.target ).length === 0 && 
-				!$('#showMaestro').is( e.target ) &&
+				!$('.showMaestro').is( e.target ) &&
 				!$('.showContact').is( e.target ) )
 			{
 				$('.modal').hide();
@@ -228,7 +332,8 @@ $(document).ready(function()
 			}
 		}
 	});
-	$('#showMaestro').on('click', function(e)
+	
+	$('.showMaestro').on('click', function(e)
 	{
 		e.preventDefault();
 		// If another modal is opened, close it now.
@@ -272,7 +377,7 @@ $(document).ready(function()
 		{
 			return false;
 		}
-		propagateLang( $(this).val() );
+		propagateThisSiteLang( $(this).val() );
 	});
 	
 	$('.showContact').on('click', function()
@@ -339,60 +444,18 @@ $(document).ready(function()
 		}
 	}
 	
-	// Menu handling
-	// Credits: Marcus Ekwall
-	// url: <https://codepen.io/joxmar/pen/NqqMEg>
-	// url: <https://stackoverflow.com/questions/9979827/change-active-menu-item-on-page-scroll>
-	// Cache selectors
-	var lastId,
-	  topMenu = $('nav'),
-	  topMenuHeight = topMenu.outerHeight() + 1,
-	  // All list items, but only anchors items as pointed out by Julian K. in StackOverflow
-	  menuItems = topMenu.find( 'a[href^="#"]' ),
-	  // Anchors corresponding to menu items
-	  scrollItems = menuItems.map(function()
-	  {
-		var item = $( $(this).attr( 'href' ) );
-		if( item.length ) { return item; }
-	  });
-
-	// Bind click handler to menu items
-	// so we can get a fancy scroll animation
-	menuItems.click(function(e)
+	$(window).on("popstate", function(e)
 	{
-		e.preventDefault();
-		var href = $(this).attr( 'href' ),
-		offsetTop = href === '#' ? 0 : $(href).offset().top-topMenuHeight + 1;
-		$('html, body').stop().animate(
-		{ 
-			scrollTop: offsetTop
-		}, 850);
-	});
-
-	// Bind to scroll
-	$(window).scroll(function()
-	{
-		// Get container scroll position
-		var fromTop = $(this).scrollTop()+ topMenuHeight;
-   
-		// Get id of current scroll item
-		var cur = scrollItems.map(function()
+		var data = e.originalEvent.state;
+		if( data !== null ) 
 		{
-			if( $(this).offset().top < fromTop )
-				return this;
-		});
-		// Get the id of the current element
-		cur = cur[cur.length-1];
-		var id = cur && cur.length ? cur[0].id : "";
-		//console.log( "Processing id " + id + " versus lastId " + lastId );
-   
-		if( lastId !== id ) 
-		{
-			lastId = id;
-			//console.log( "Remove class 'active' and sets it on " + id );
-			// Set/remove active class
-			menuItems.removeClass("active");
-			menuItems.filter('[href="#' + id + '"]' ).addClass( 'active' );
-	   }                   
+			var lang = data.lang;
+			//console.log( "Found page " + data.url + " with language " + data.lang );
+			if( lang != $(':root').attr( 'lang' ) )
+			{
+				//console.log( "Language in history (" + data.lang + ") is different than our current one, changing." );
+				propagateLang( lang );
+			}
+		}
 	});
 });
