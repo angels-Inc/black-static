@@ -19,6 +19,7 @@ jquery.magnific-popup.min.js | The JavaScript of Magnific popup
 magnific-popup.css | The CSS for Magnific popup
 sprintf.js | The JavaScript library used to format localised characters strings in the contact popup.
 Tokyo.jpg | The background image used in the contact popup
+ua-parser.js | A small library to parse user agent string, which is then used for impeoved css rules
 
 
 ## JavaScript
@@ -176,7 +177,6 @@ window.propagateLang = function( selectedLang )
 			cookieData.lang = selectedLang;
 			setCookie(cookieName, cookieData);
 		}
-		console.log("Current lang is: " + $(':root').attr( 'lang' ).toLowerCase() );
 	};
 
 	function propagateThisSiteLang(lang)
@@ -184,7 +184,6 @@ window.propagateLang = function( selectedLang )
 		if( typeof( propagateLang ) !== 'undefined' && $.isFunction( propagateLang ) )
 		{
 			propagateLang( lang );
-			console.log( "Found " + $('div.video[lang]:visible .playVideo').length + " div[lang] visible." );
 		}
 		else
 		{
@@ -193,18 +192,97 @@ window.propagateLang = function( selectedLang )
 	}
 ```
 
-Then, we have this bit of code to check if the user session has already a language recorded and if so, we set the language as it was. Otherwise we propagate the language set in the html tag.
+Then, we have this bit of code to check if the user session has already a language recorded and if so, we set the language as it was. Otherwise we try to find a suitable candidate from the user accepted language, and if this fails, we just propagate the default language set in the html tag.
 ``` JavaScript
 var cookieName = 'baCookie';
 var cookieData = getCookie(cookieName, true);
+// Do we have a language on record?
 if( cookieData.lang )
 {
 	propagateThisSiteLang( cookieData.lang );
 }
+// Try to find out from the user accepted languages
 else
 {
-	propagateThisSiteLang( $(':root').attr( 'lang' ) );
+	var prefLang = window.navigator.languages ? window.navigator.languages : window.navigator.userLanguage ? window.navigator.userLanguage : navigator.language ? navigator.language : '';
+	var okLang;
+	if( prefLang.length )
+	{
+		prefLang = new String( prefLang );
+		var a = prefLang.split( ',' );
+		var b = new Array();
+		for( var i = 0; i < a.length; i++ )
+		{
+			if( a[i].indexOf( '-' ) != -1 )
+			{
+				// Make sure this is in the format of en-GB and not en-gb
+				var l1 = a[i].split( '-' )[0];
+				var l2 = a[i].split( '-' )[1].toUpperCase();
+				console.log( "Replace at offset " + i + " " + a[i] + " with " + [l1, l2].join( '-' ) );
+				a.splice( i, 1, [l1, l2].join( '-' ) );
+				// For ex, if en-US is found and there is no 'en' in the original list, we add 'en' at the end,
+				// so this can match en-GB as an alternative
+				if( a.indexOf( l1 ) == -1 )
+				{
+					b.push( l1 );
+				}
+			}
+		}
+		if( b.length > 0 )
+		{
+			a.push.apply( a, b );
+		}
+
+		for( var i = 0; i < a.length; i++ )
+		{
+			if( typeof( window.l10n[ a[ i ] ] ) !== 'undefined' )
+			{
+				okLang = a[ i ];
+				break;
+			}
+			else
+			{
+				Object.keys( window.l10n ).forEach(function(l)
+				{
+					if( l.split('-')[0] == a[i] )
+					{
+						okLang = l;
+						return;
+					}
+				});
+				if( typeof( okLang ) !== 'undefined' ) break;
+			}
+		}
+	}
+	if( typeof( okLang ) !== "undefined" )
+	{
+		propagateThisSiteLang( okLang );
+	}
+	else
+	{
+		propagateThisSiteLang( $(':root').attr( 'lang' ) );
+	}
 }
+```
+
+Add some enhancement to the dom by setting some browser environment variable in the html tag so that it can then referred in css like so:
+``` JavaScript
+// Enhanced css rules triggered by attributes in the html tag
+var parser = new UAParser();
+var browser = parser.getBrowser();
+var engine = parser.getEngine();
+var os = parser.getOS();
+var device = parser.getDevice();
+// Set some environmental standard values used in css
+$(':root').attr( 'data-ua-sig', navigator.userAgent );
+$(':root').attr( 'data-ua-code', navigator.appCodeName );
+// Useless piece of shit
+// $(':root').attr( 'data-ua-name', navigator.appName );
+$(':root').attr( 'data-ua-name', parser.getBrowser().name );
+$(':root').attr( 'data-ua-platform', navigator.platform );
+$(':root').attr( 'data-ua-device', "" );
+if( typeof( parser.getDevice().type ) !== 'undefined' ) $(':root').attr( 'data-ua-device', parser.getDevice().type );
+$(':root').attr( 'data-ua-os', parser.getOS().name );
 ```
 
 Then we have this piece of jQuery code to catch any click on the menu items and set the .active class accordingly so the menu item can be displayed as being selected.

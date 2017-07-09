@@ -100,12 +100,12 @@ p, li, .text
 
 .clearfix:after 
 {
-	visibility: hidden;
 	display: block;
-	font-size: 0;
+	visibility: hidden;
 	content: " ";
 	clear: both;
 	height: 0;
+	font-size: 0;
 }
 
 * html .clearfix 
@@ -118,10 +118,19 @@ p, li, .text
 	zoom: 1;
 }
 
+/* 
+*
+{
+	padding: 0;
+	margin: 0;
+}
+ */
+
 body 
 {
 	background: white;
 	overflow-x: hidden;
+	overflow-y: scroll;
 	font-family: 'Open Sans', Arial Unicode MS, sans-serif;
 }
 
@@ -207,7 +216,8 @@ header
 		    transform: scale(1.2);
 }
 
-.mobile-toggle, .toggle-menu 
+.mobile-toggle, 
+.toggle-menu 
 {
 	display: none !important;
 }
@@ -278,11 +288,18 @@ main
 	        transition: all 200ms ease-in-out;
 }
 
+main section
+{
+	height: auto;
+}
+
 main section#intro 
 {
 	position: relative;
 	z-index: 1;
+/* 
 	min-height: 100%;
+ */
 	text-align: center;
 	padding-top: 70px;
 	background-image: url(ft.jpg);
@@ -337,17 +354,22 @@ main section:not([id="intro"])
 {
 	position: relative;
 	z-index: 3;
+/* 
 	min-height: 100%;
+ */
 	background: white;
 	font-size: 120%;
 	padding-top: 70px;
+	padding-bottom: 20px;
 }
 
+/* 
 main section:not([id="intro"]):not(:last-of-type)
 {
 	height: 100%;
 	min-height: 700px;
 }
+ */
 
 main section h2 
 {
@@ -388,19 +410,28 @@ main section p
 
 /* 
 Matching the membership section, but otherwise whichever is put last
+https://stackoverflow.com/a/5474913/4814971
  */
 main section:last-of-type 
 {
 	position: relative;
-	z-index: 2;
+	z-index: 3;
 	/* Must be equal to the height of the footer */
 	margin-bottom: 267px;
+	margin-top: 0px;
+/* 
 	padding-top: 100px !important;
+ */
 	background: white;
 	padding: 80px 0px;
+	-webkit-box-shadow: 0 24px 20px -20px #002;
+	   -moz-box-shadow: 0 24px 20px -20px #002;
+	        box-shadow: 0 24px 20px -20px #002;
+/* 
 	-webkit-box-shadow: 0 0px black, 0px 5px 50px -15px #002;
 	   -moz-box-shadow: 0 0px black, 0px 5px 50px -15px #002;
 	        box-shadow: 0 0px black, 0px 5px 50px -15px #002;
+ */
 }
 
 main section #LeStudioBon
@@ -564,6 +595,15 @@ footer .footer-policy br
 	display: none;
 }
 
+/*
+class to be applied to the <body> element to prevent scrolling while allowing the popups to be scrollable 
+https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-overlay-scrolling
+*/
+.noscroll 
+{
+	overflow: hidden;
+}
+
 #mask
 {
     display: none;
@@ -573,6 +613,8 @@ footer .footer-policy br
     left: 0;
     width: 100%;
     height: 100%;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     background: rgba(0,0,0,0.6);
 }
 
@@ -581,13 +623,10 @@ footer .footer-policy br
 {
     display: none;
 	position: fixed;
+    z-index: 1000;
 	top: 50%;
 	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	   -moz-transform: translate(-50%, -50%);
-	        transform: translate(-50%, -50%);
     width: 60%;
-    z-index: 1000;
     color: black;
     padding: 0;
     background: white;
@@ -596,6 +635,9 @@ footer .footer-policy br
          -o-border-radius: 10px;
             border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-webkit-transform: translate(-50%, -50%);
+	   -moz-transform: translate(-50%, -50%);
+	        transform: translate(-50%, -50%);
 }
 
 .modal .body
@@ -730,9 +772,13 @@ footer .footer-policy br
 	box-shadow: 8px 8px 10px #aaa;
 }
 
+/* Contact popup */
 #contact
 {
+/* 
 	width: 852px;
+ */
+	width: auto;
 }
 
 #contact .body
@@ -1036,7 +1082,8 @@ img.bapVideo
 	}
 }
 
-@media screen and (max-width: 1200px) 
+/* Tablet size in portrait orientation */
+@media only screen and (max-width: 1200px) 
 {
 	.menu 
 	{
@@ -1048,21 +1095,6 @@ img.bapVideo
 		height: 70px;
 	}
 
-	#intro 
-	{
-		min-height: 350px;
-	}
-
-	#intro h1 
-	{
-		font-size: 1.7em;
-	}
-	
-	section h2 
-	{
-		font-size: 1.5em;
-	}
-	
 	/* Move the logo to the center */
 	.logo 
 	{
@@ -1128,43 +1160,6 @@ img.bapVideo
 		display: block !important;
 	}
 
-	nav 
-	{
-		position: fixed;
-		z-index: 4;
-		top: 70px;
-		left: -20%;
-		width: 20%;
-		height: 100%;
-		background: white !important;
-		-webkit-transition: all 300ms ease;
-		   -moz-transition: all 300ms ease;
-		        transition: all 300ms ease;
-	}
-	
-	nav a 
-	{
-		display: block !important;
-		height: 35px !important;
-		padding: 20px 15px;
-		line-height: 0px;
-		color: #42A5F5 !important;
-		text-align: center;
-		background: white;
-		cursor: pointer;
-	}
-	
-	nav a:hover 
-	{
-		background: #42A5F5 !important;
-		color: white !important;
-	}
-
-	nav a.active
-	{
-		color: #FFFFFF !important;
-	}
-
 	.toggle-menu 
 	{
 		position: absolute;
@@ -1206,6 +1201,43 @@ img.bapVideo
 		bottom: 85%;
 	}
 	
+	nav 
+	{
+		position: fixed;
+		z-index: 4;
+		top: 70px;
+		left: -20%;
+		width: 20%;
+		height: 100%;
+		background: white !important;
+		-webkit-transition: all 300ms ease;
+		   -moz-transition: all 300ms ease;
+		        transition: all 300ms ease;
+	}
+	
+	nav a 
+	{
+		display: block !important;
+		height: 35px !important;
+		padding: 20px 15px;
+		line-height: 0px;
+		color: #42A5F5 !important;
+		text-align: center;
+		background: white;
+		cursor: pointer;
+	}
+	
+	nav a:hover 
+	{
+		background: #42A5F5 !important;
+		color: white !important;
+	}
+
+	nav a.active
+	{
+		color: #FFFFFF !important;
+	}
+
 	nav #langMenuPrefix
 	{
 		display: inline-block;
@@ -1221,8 +1253,8 @@ img.bapVideo
 		width: 100%;
 		height: 2px;
 		background: #42A5F5;
-		border-bottom: 1px solid rgba(255,255,255,0.5);
 		border-top: 1px solid rgba(0,0,0,0.5);
+		border-bottom: 1px solid rgba(255,255,255,0.5);
 	}
 	
 	nav .xlang
@@ -1253,10 +1285,48 @@ img.bapVideo
 	{
 		width: 100%;
 	}
+
+	main #intro 
+	{
+		min-height: 350px;
+	}
+
+	main #intro h1 
+	{
+		font-size: 1.7em;
+	}
+	
+	main section h2 
+	{
+		font-size: 1.5em;
+	}
+	
+/* 
+	main section p
+	{
+		line-height: 150%;
+	}
+	
+	main section:not([id="intro"]) 
+	{
+		font-size: 100%;
+	}
+
+	main section:not([id="intro"]):not(:last-of-type) 
+	{
+		height: 100%;
+		min-height: 100% !important;
+	}
+ */
 }
 
-@media screen and (max-width: 960px) 
+@media only screen and (max-width: 960px) 
 {
+	.align 
+	{
+		max-width: 80%;
+	}
+
 	.text 
 	{
 		float: none;
@@ -1264,11 +1334,28 @@ img.bapVideo
 		padding: 0;
 		margin-bottom: 30px;
 	}
+	
+	figure[id="LeStudioBon"]
+	{
+		display: none !important;
+		visibility: hidden !important;
+	}
+	
+	main section p
+	{
+		line-height: 130%;
+	}
+	
+	main section:not([id="intro"]) 
+	{
+		font-size: 90%;
+	}
 }
 
-@media screen and (max-width: 800px) 
+/* iPad 3 and 4 */
+@media only screen and (max-width: 800px) 
 {
-	section#membership 
+	main section#membership 
 	{
 		box-shadow: none;
 	}
@@ -1306,36 +1393,119 @@ img.bapVideo
 	}
 }
 
-@media screen and (max-width: 520px) 
+/* iPhone, 3, 4, 4S */
+@media only screen and (max-width: 520px) 
 {
-	nav 
-	{
-		width: 100% !important;
-		left: -100%;
-	}
-
 	.mobile-toggle:checked ~ main 
 	{
 		overflow: hidden;
 		width: 100%;
 	}
 
-	section#intro .center h1 
+	nav 
+	{
+		width: 30% !important;
+		left: -100%;
+		font-size: 0.7em;
+	}
+	
+	nav a
+	{
+		height: 25px !important;
+		padding: 15px 10px;
+	}
+	
+	.xlang
+	{
+		font-size: 0.9em !important;
+	}
+	
+/* 
+	nav a span
+	{
+		font-size: 0.7em;
+	}
+ */
+
+	main section#intro .center h1 
 	{
 		font-size: 1.5em;
 		padding: 0px !important;
 	}
 
-	section h2 
+	main section h2 
 	{
 		font-size: 1.3em;
 	}
+	
+	.playVideo svg 
+	{
+		/* original dimension is 213.7 x 213.7 */
+		width: 107px;
+		height: 107px;
+/* 
+		-webkit-transition: none;
+		   -moz-transition: none;
+		     -o-transition: color 0 ease-in;
+		        transition: none;
+		-webkit-transform: scale(0.5);
+		   -moz-transform: scale(0.5);
+				transform: scale(0.5);
+ */
+	}
+	
+	.modal
+	{
+		width: auto;
+		max-height: 90%;
+	}
+	
+	#maestro
+	{
+		width: 90%;
+		max-height: 90%;
+	}
+	
+	#maestro .body
+	{
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+	
+	#maestro .body > img
+	{
+		max-width: 30%;
+		max-height: 30%;
+	}
+
+	#contact .body
+	{
+		line-height: 1em;
+		font-size: 0.7em;
+		padding: 5px;
+	}
 }
 
-@media screen and (max-width: 490px) 
+@media only screen and (max-width: 490px) 
 {
+	main section:last-of-type 
+	{
+		margin-bottom: 50px;
+	}
+	
+	footer
+	{
+		max-height: 50px;
+	}
+	
 	footer input[type=submit] 
 	{
 		margin-top: 10px;
 	}
+}
+
+/* iWatch */
+@media (max-device-width: 42mm) and (min-device-width: 38mm) 
+{
+
 }

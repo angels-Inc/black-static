@@ -82,6 +82,11 @@ And almost completely modified to only use css3 by Jacques Deguest
     cursor: pointer;
 }
 
+.xlang label
+{
+	color: #42A5F5;
+}
+
 .xlang label:hover,
 .xlang input:checked[value="cn-TW"] ~ ul li label[code="cn-TW"],
 .xlang input:checked[value="de-DE"] ~ ul li label[code="de-DE"],
@@ -96,20 +101,9 @@ And almost completely modified to only use css3 by Jacques Deguest
 .xlang input:checked[value="tl-PH"] ~ ul li label[code="tl-PH"],
 .xlang input:checked[value="vi-VN"] ~ ul li label[code="vi-VN"]
 {
-	color: #fff;
+	color: #fff !important;
 	background: #42A5F5;
-/* 
-	background: #0088CC;
- */
 }
-
-/* 
-.xlang:hover div,
-.xlang:hover ul
-{
-    border-color: #000;
-}
- */
 
 .xlang
 {

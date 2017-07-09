@@ -129,29 +129,111 @@ $(document).ready(function()
 
 	var cookieName = 'baCookie';
 	var cookieData = getCookie(cookieName, true);
+	
+	// Do we have a language on record?
 	if( cookieData.lang )
 	{
 		propagateThisSiteLang( cookieData.lang );
 	}
+	// Try to find out from the user accepted languages
 	else
 	{
-		propagateThisSiteLang( $(':root').attr( 'lang' ) );
+		var prefLang = window.navigator.languages ? window.navigator.languages : window.navigator.userLanguage ? window.navigator.userLanguage : navigator.language ? navigator.language : '';
+		var okLang;
+		if( prefLang.length )
+		{
+			prefLang = new String( prefLang );
+			console.log( "Preferred languages found are: " + prefLang );
+			var a = prefLang.split( ',' );
+			var b = new Array();
+			for( var i = 0; i < a.length; i++ )
+			{
+				if( a[i].indexOf( '-' ) != -1 )
+				{
+					// Make sure this is in the format of en-GB and not en-gb
+					var l1 = a[i].split( '-' )[0];
+					var l2 = a[i].split( '-' )[1].toUpperCase();
+					console.log( "Replace at offset " + i + " " + a[i] + " with " + [l1, l2].join( '-' ) );
+					a.splice( i, 1, [l1, l2].join( '-' ) );
+					// For ex, if en-US is found and there is no 'en' in the original list, we add 'en' at the end,
+					// so this can match en-GB as an alternative
+					if( a.indexOf( l1 ) == -1 )
+					{
+						b.push( l1 );
+					}
+				}
+			}
+			if( b.length > 0 )
+			{
+				a.push.apply( a, b );
+			}
+			console.log( "List of preferred languages now is: " + a.join( ', ' ) );
+			
+			for( var i = 0; i < a.length; i++ )
+			{
+				if( typeof( window.l10n[ a[ i ] ] ) !== 'undefined' )
+				{
+					okLang = a[ i ];
+					console.log( "Found a valid user language: " + okLang );
+					break;
+				}
+				else
+				{
+					Object.keys( window.l10n ).forEach(function(l)
+					{
+						console.log( "Checking " + a[i] + " against " + l );
+						if( l.split('-')[0] == a[i] )
+						{
+							okLang = l;
+							console.log( "Ok, found our language " + l + " to be a viable match." );
+							return;
+						}
+					});
+					if( typeof( okLang ) !== 'undefined' ) break;
+				}
+			}
+		}
+		if( typeof( okLang ) !== "undefined" )
+		{
+			propagateThisSiteLang( okLang );
+		}
+		else
+		{
+			propagateThisSiteLang( $(':root').attr( 'lang' ) );
+		}
 	}
 	
+	// Enhanced css rules triggered by attributes in the html tag
+	var parser = new UAParser();
+	var browser = parser.getBrowser();
+	var engine = parser.getEngine();
+	var os = parser.getOS();
+	var device = parser.getDevice();
+	// Set some environmental standard values used in css
+	$(':root').attr( 'data-ua-sig', navigator.userAgent );
+	$(':root').attr( 'data-ua-code', navigator.appCodeName );
+	// Useless piece of shit
+ 	// $(':root').attr( 'data-ua-name', navigator.appName );
+	$(':root').attr( 'data-ua-name', parser.getBrowser().name );
+	$(':root').attr( 'data-ua-platform', navigator.platform );
+	$(':root').attr( 'data-ua-device', "" );
+	if( typeof( parser.getDevice().type ) !== 'undefined' ) $(':root').attr( 'data-ua-device', parser.getDevice().type );
+	$(':root').attr( 'data-ua-os', parser.getOS().name );
+
+/*	
 	$('nav a').on('click', function()
 	{
 		//var hash = window.location.hash;
-		var hash = $(this).hash;
-		$( 'nav a' ).each(function(i,e) 
-		{
-            // checks if its the same on the address bar
-			if( hash != e.hash ) 
-			{ 
-				$(this).removeClass( 'active' );
-			}
-		});
+		var hash = this.hash;
+		console.log( "Received a click for " + hash );
+		$( 'nav a' ).removeClass( 'active' );
 		$(this).addClass( 'active' );
+		if( $('#toggle').is(':checked' ) )
+		{
+			$('#toggle').prop( 'checked', false );
+		}
 	});
+*/
 	
 	// Menu handling
 	// Credits: Marcus Ekwall
@@ -160,9 +242,9 @@ $(document).ready(function()
 	// Cache selectors
 	var lastId,
 	  topMenu = $('nav'),
-	  topMenuHeight = topMenu.outerHeight() + 1,
+	  topMenuHeight = $('header').outerHeight() + 1,
 	  // All list items, but only anchors items as pointed out by Julian K. in StackOverflow
-	  menuItems = topMenu.find( 'a[href^="#"]' ),
+	  menuItems = topMenu.find( 'a' ),
 	  // Anchors corresponding to menu items
 	  scrollItems = menuItems.map(function()
 	  {
@@ -173,20 +255,44 @@ $(document).ready(function()
 	console.log( "topMenuHeight: " + topMenuHeight + " and bap offset top is : " + $('#bap').offset().top );
 	// Bind click handler to menu items
 	// so we can get a fancy scroll animation
-	menuItems.click(function(e)
+	menuItems.on('click',function(e)
 	{
 		e.preventDefault();
 		var href = $(this).attr( 'href' );
-		scrollAnimate(href);
-		if( window.history.pushState ) 
+		var hash = this.hash;
+		
+		console.log( "Received a click for " + hash );
+		if( !$('#toggle').is(':checked' ) )
 		{
-			if( href.indexOf( document.domain ) > -1 || 
-				href.indexOf(':') === -1 )
+			menuItems.removeClass( 'active' );
+			$(this).addClass( 'active' );
+		}
+		else if( $(this).hasClass( 'showContact' ) )
+		{
+			showContact();
+		}
+		
+		console.log( "Is mobile toggle checked? " + $('#toggle').is(':checked' ) );
+		console.log( "Is the link " + href + " matching the hash " + hash + " ? " + ( href == hash ) );
+		if( hash.length > 0 && href == hash )
+		{
+			scrollAnimate(href);
+			if( window.history.pushState ) 
 			{
-				//console.log( "Adding url " + href + " to history with language " + $(':root').attr('lang') );
-				window.history.pushState({"url": href, "lang": $(':root').attr('lang')}, "", href);
-				return false;
+				if( href.indexOf( document.domain ) > -1 || 
+					href.indexOf(':') === -1 )
+				{
+					//console.log( "Adding url " + href + " to history with language " + $(':root').attr('lang') );
+					window.history.pushState({"url": href, "lang": $(':root').attr('lang')}, "", href);
+					//return false;
+				}
 			}
+		}
+		// If the mobile menu is opened, we close it after the click
+		// This is the expected behaviour
+		if( $('#toggle').is(':checked' ) )
+		{
+			$('#toggle').attr( 'checked', false );
 		}
 	});
 	
@@ -209,6 +315,7 @@ $(document).ready(function()
 				if( $(href).offset().top > 0 )
 				{
 					console.log( "Div " + href + " is " + $(href).offset().top + " from top." );
+					console.log( "offsetTop = $(href).offset().top - topMenuHeight + 1 = " + " offsetTop = " + $(href).offset().top + " - " + topMenuHeight + " + 1");
 					offsetTop = $(href).offset().top - topMenuHeight + 1;
 					console.log( "Smooth scrolling down to " + offsetTop + " for " + href );
 					$('html, body').stop().animate(
@@ -327,6 +434,7 @@ $(document).ready(function()
 			{
 				$('.modal').hide();
 				$('#mask').hide();
+				$('body').removeClass('noscroll');
 				// No need to continue updating our availability if the contact window is not up
 				if( window.AVAIL_CHECK !== 'undefined' ) clearInterval(window.AVAIL_CHECK);
 			}
@@ -343,12 +451,14 @@ $(document).ready(function()
 		}
 		$('#maestro').show();
 		$('#mask').show();
+		$('body').addClass('noscroll');
 	});
 	
 	$('.modal .close, .modal .button').on('click', function()
 	{
 		$('.modal').hide();
 		$('#mask').hide();
+		$('body').removeClass('noscroll');
 		if( window.AVAIL_CHECK !== 'undefined' ) clearInterval(window.AVAIL_CHECK);
 	});
 	
@@ -380,16 +490,28 @@ $(document).ready(function()
 		propagateThisSiteLang( $(this).val() );
 	});
 	
-	$('.showContact').on('click', function()
+	window.showContact = function()
 	{
-		if( $('.modal').is( ':visible' ) )
+		if( $('.modal').is( ':visible' ) && $('.modal').attr('id') !== 'contact' )
 		{
 			$('.modal').hide();
 		}
+		console.log( "Displaying the contact popup." );
 		$('#contact').show();
 		$('#mask').show();
+		$('body').addClass('noscroll');
 		availability();
 		window.AVAIL_CHECK = setInterval(availability,60000);
+	}
+	
+	//$('.showContact').on('click', function()
+	$(document).on('click', '.showContact, .showContact span', function(e)
+	{
+		e.preventDefault();
+		//e.stopPropagation();
+		console.log( "Received a click to show the contact popup." );
+		showContact();
+		return false;
 	});
 	
 	$('.courriel').on('click', function(e)
