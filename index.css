@@ -927,6 +927,7 @@ https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-ove
 	position: relative;
 	display: inline-block;
 	float: right;
+	z-index: 4;
 }
 
 img.bapVideo
@@ -1391,6 +1392,18 @@ img.bapVideo
 	{
 		content: "";
 	}
+	
+	.modal
+	{
+		width: 90%;
+		max-height: 90%;
+	}
+
+	#maestro .body > img
+	{
+		max-width: 20%;
+		max-height: 20%;
+	}
 }
 
 /* iPhone, 3, 4, 4S */
@@ -1452,12 +1465,6 @@ img.bapVideo
 		   -moz-transform: scale(0.5);
 				transform: scale(0.5);
  */
-	}
-	
-	.modal
-	{
-		width: auto;
-		max-height: 90%;
 	}
 	
 	#maestro
