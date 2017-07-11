@@ -306,9 +306,6 @@ main section#intro
 {
 	position: relative;
 	z-index: 1;
-/* 
-	min-height: 100%;
- */
 	text-align: center;
 	padding-top: 70px;
 	background-image: url(ft.jpg);
@@ -317,6 +314,19 @@ main section#intro
     background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-position: center center;
+}
+
+/* 
+Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0 
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393
+*/
+/* <html lang="ja-JP" data-ua-sig="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393" data-ua-code="Mozilla" data-ua-name="Edge" data-ua-platform="Win32" data-ua-device="" data-ua-os="Windows">*/
+/* https://css-tricks.com/rgba-browser-support/ */
+[data-ua-sig*=" Edge/"] main section#intro
+{
+	background: transparent;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#33000000,endColorstr=#33000000); 
+	zoom: 1;
 }
 
 main section#intro .center 
