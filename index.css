@@ -64,6 +64,15 @@
 	background: white;
 }
 
+/* 
+html
+{
+	line-height: 1.15;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+ */
+
 .is-open 
 {
 	display: block !important;
@@ -419,9 +428,6 @@ main section:last-of-type
 	/* Must be equal to the height of the footer */
 	margin-bottom: 267px;
 	margin-top: 0px;
-/* 
-	padding-top: 100px !important;
- */
 	background: white;
 	padding: 80px 0px;
 	-webkit-box-shadow: 0 24px 20px -20px #002;
@@ -976,9 +982,6 @@ img.bapVideo
 	stroke-dasharray: 240;
 	stroke-dashoffset: 480;
 	stroke: #42A5F5;
-/* 
-	stroke: #fff;
- */
 	-webkit-transform: translateY(0);
 	   -moz-transform: translateY(0);
 	        transform: translateY(0);
@@ -1008,6 +1011,7 @@ img.bapVideo
 .list li 
 {
 	position: relative;
+	line-height: 170%;
 }
 
 .list li::after,
