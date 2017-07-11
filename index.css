@@ -215,6 +215,7 @@ header
 	opacity : 1.2;
 	-webkit-transition: all 250ms ease;
 	   -moz-transition: all 250ms ease;
+	    -ms-transition: all 250ms ease;
 	        transition: all 250ms ease;
 }
 
@@ -222,6 +223,7 @@ header
 {
 	-webkit-transform: scale(1.2);
 	   -moz-transform: scale(1.2);
+	    -ms-transform: scale(1.2);
 		    transform: scale(1.2);
 }
 
@@ -314,6 +316,10 @@ main section#intro
     background-blend-mode: overlay;
     background-repeat: no-repeat;
     background-position: center center;
+    background-color: hsl(0, 100%, 10%, 0.2);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000); 
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+	filter: alpha(opacity=40);
 }
 
 /* 
@@ -325,11 +331,29 @@ Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 [data-ua-sig*=" Edge/"] main section#intro
 {
 /* 
-	background: transparent;
- */
+ 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+ 	filter: alpha(opacity=40);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#33000000,endColorstr=#33000000); 
 	zoom: 1;
+ */
+/* 
+	background-color: black;
+	opacity: 0.2;
+ */
+	background-image: 
+		linear-gradient(
+		  rgba(0, 0, 0, 0.2),
+		  rgba(0, 0, 0, 0.2)
+		),
+		url(ft.jpg);
 }
+
+/* 
+[data-ua-sig*=" Edge/"] main section#intro:not([dummy])
+{
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled='false') !important;
+}
+ */
 
 main section#intro .center 
 {
@@ -349,7 +373,21 @@ main section#intro h1
 	color: rgba(255,255,255,1);
 	font-size: 3em;
 	font-weight: 900;
+	/* mix-blend-mode: difference; */
+/* 
+	background: inherit;
+	background-clip: text;
+	color: transparent;
+	filter: invert(1) grayscale(1) contrast(9);
+ */
 }
+
+/* 
+[data-ua-sig*=" Edge/"] main section#intro h1
+{
+	text-shadow: 0px 0px 3px #000, -1px -1px #000, 1px 1px #000;
+}
+ */
 
 main section#intro h1 [lang] 
 {
