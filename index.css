@@ -324,7 +324,9 @@ Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)
 /* https://css-tricks.com/rgba-browser-support/ */
 [data-ua-sig*=" Edge/"] main section#intro
 {
+/* 
 	background: transparent;
+ */
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#33000000,endColorstr=#33000000); 
 	zoom: 1;
 }
