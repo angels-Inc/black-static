@@ -873,12 +873,13 @@ https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-ove
 	background-color: hsla(0,0%,100%,0.20);
     background-blend-mode: overlay;
     background-repeat: no-repeat;
-	opacity: 0.5;
+	opacity: 0.3;
 }
 
 #contact .body h3
 {
-	color: rgba(217, 23, 23, 1);
+	/* Florian recommends to keep consistency in color with the rest of the page. */
+	/* color: rgba(217, 23, 23, 1);*/
 	padding-bottom: 10px;
 }
 
