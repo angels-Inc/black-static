@@ -50,6 +50,7 @@
 {
 	background: #42A5F5;
 	background: -webkit-linear-gradient(#42A5F5, #01579B);
+	background:        -webkit-gradient(linear, left top, left bottom, from(#42A5F5), to(#01579B));
 	background:         linear-gradient(#42A5F5, #01579B);
 }
 
@@ -98,7 +99,9 @@ h1, h2, h3
 
 *, *:after, *:before 
 {
-	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	   -moz-box-sizing: border-box;
+	        box-sizing: border-box;
 }
 
 p, li, .text 
@@ -186,7 +189,8 @@ header
 	font-family: "Open Sans", sans serif;
 	font-size: 15px;
 	background: #FFFFFF;
-	box-shadow: 0px 3px 40px -10px #01579B;
+	-webkit-box-shadow: 0px 3px 40px -10px #01579B;
+	        box-shadow: 0px 3px 40px -10px #01579B;
 }
 
 .align 
@@ -212,10 +216,11 @@ header
 	max-height: 100%;
 	padding: 15px !important;
 	cursor: pointer;
-	opacity : 1.2;
+	opacity: 1.2;
 	-webkit-transition: all 250ms ease;
 	   -moz-transition: all 250ms ease;
 	    -ms-transition: all 250ms ease;
+	     -o-transition: all 250ms ease;
 	        transition: all 250ms ease;
 }
 
@@ -224,6 +229,7 @@ header
 	-webkit-transform: scale(1.2);
 	   -moz-transform: scale(1.2);
 	    -ms-transform: scale(1.2);
+	     -o-transform: scale(1.2);
 		    transform: scale(1.2);
 }
 
@@ -255,6 +261,7 @@ nav a
 	text-decoration: none;
 	-webkit-transition: all 400ms linear;
 	   -moz-transition: all 400ms linear;
+		 -o-transition: all 400ms linear;
 	        transition: all 400ms linear;
 }
 
@@ -289,9 +296,13 @@ main
 	right: 0;
 	width: 100%;
 	height: 100%; /* To make the smooth scroll work with proportional values */
-	box-sizing: border-box !important;
+	-webkit-box-sizing: border-box !important;
+	   -moz-box-sizing: border-box !important;
+	        box-sizing: border-box !important;
 	-webkit-transform-origin: 50% 50% 0;
 	   -moz-transform-origin: 50% 50% 0;
+		-ms-transform-origin: 50% 50% 0;
+		 -o-transform-origin: 50% 50% 0;
 		    transform-origin: 50% 50% 0;
 	-webkit-transition: all 200ms ease-in-out;
 	   -moz-transition: all 200ms ease-in-out;
@@ -324,22 +335,14 @@ main section#intro
 
 /* 
 Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0 
-Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393
+Surface -> Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393
 */
-/* <html lang="ja-JP" data-ua-sig="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393" data-ua-code="Mozilla" data-ua-name="Edge" data-ua-platform="Win32" data-ua-device="" data-ua-os="Windows">*/
-/* https://css-tricks.com/rgba-browser-support/ */
+/*
+https://css-tricks.com/rgba-browser-support/
+https://css-tricks.com/design-considerations-text-images/
+*/
 [data-ua-sig*=" Edge/"] main section#intro
 {
-/* 
- 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
- 	filter: alpha(opacity=40);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#33000000,endColorstr=#33000000); 
-	zoom: 1;
- */
-/* 
-	background-color: black;
-	opacity: 0.2;
- */
 	background-image: 
 		linear-gradient(
 		  rgba(0, 0, 0, 0.2),
@@ -362,6 +365,8 @@ main section#intro .center
 	left: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	   -moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		 -o-transform: translate(-50%, -50%);
 		    transform: translate(-50%, -50%);
 }
 
@@ -370,16 +375,10 @@ main section#intro h1
 	display: block;
 	width: 100%;
 	padding: 0px 40px;
+	color: rgb(255,255,255);
 	color: rgba(255,255,255,1);
 	font-size: 3em;
 	font-weight: 900;
-	/* mix-blend-mode: difference; */
-/* 
-	background: inherit;
-	background-clip: text;
-	color: transparent;
-	filter: invert(1) grayscale(1) contrast(9);
- */
 }
 
 /* 
@@ -413,22 +412,11 @@ main section:not([id="intro"])
 {
 	position: relative;
 	z-index: 3;
-/* 
-	min-height: 100%;
- */
 	background: white;
 	font-size: 120%;
 	padding-top: 70px;
 	padding-bottom: 20px;
 }
-
-/* 
-main section:not([id="intro"]):not(:last-of-type)
-{
-	height: 100%;
-	min-height: 700px;
-}
- */
 
 main section h2 
 {
@@ -483,11 +471,6 @@ main section:last-of-type
 	-webkit-box-shadow: 0 24px 20px -20px #002;
 	   -moz-box-shadow: 0 24px 20px -20px #002;
 	        box-shadow: 0 24px 20px -20px #002;
-/* 
-	-webkit-box-shadow: 0 0px black, 0px 5px 50px -15px #002;
-	   -moz-box-shadow: 0 0px black, 0px 5px 50px -15px #002;
-	        box-shadow: 0 0px black, 0px 5px 50px -15px #002;
- */
 }
 
 main section #LeStudioBon
@@ -690,9 +673,13 @@ https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-ove
        -moz-border-radius: 10px;
          -o-border-radius: 10px;
             border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+       -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	-webkit-transform: translate(-50%, -50%);
 	   -moz-transform: translate(-50%, -50%);
+		-ms-transform: translate(-50%, -50%);
+		 -o-transform: translate(-50%, -50%);
 	        transform: translate(-50%, -50%);
 }
 
@@ -780,6 +767,7 @@ https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-ove
 	background-image:    -moz-linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
 	background-image:     -ms-linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
 	background-image:      -o-linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
+	background-image:        -webkit-gradient(linear, left top, left bottom, from(bottom), color-stop(rgb(246, 246, 246)), to(rgb(225, 225, 225)));
 	background-image:         linear-gradient(bottom, rgb(246, 246, 246), rgb(225, 225, 225));
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#f6f6f6', EndColorStr='#e1e1e1');
 }
@@ -825,7 +813,9 @@ https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-ove
 	max-width: 200px;
 	max-height: 400px;
 	margin: 10px;
-	box-shadow: 8px 8px 10px #aaa;
+	-webkit-box-shadow: 8px 8px 10px #aaa;
+	   -moz-box-shadow: 8px 8px 10px #aaa;
+	        box-shadow: 8px 8px 10px #aaa;
 }
 
 /* Contact popup */
@@ -844,21 +834,27 @@ https://stackoverflow.com/questions/9280258/prevent-body-scrolling-but-allow-ove
     padding: 50px;
     -webkit-column-count: 2;
 	   -moz-column-count: 2;
+	    -ms-column-count: 2;
 	        column-count: 2;
 	-webkit-column-gap: 40px;
 	   -moz-column-gap: 40px;
+	    -ms-column-gap: 40px;
 		    column-gap: 40px;
 	-webkit-column-rule-style: solid;
 	   -moz-column-rule-style: solid;
+	    -ms-column-rule-style: solid;
 			column-rule-style: solid;
 	-webkit-column-rule-width: 1px;
 	   -moz-column-rule-width: 1px;
+	    -ms-column-rule-width: 1px;
 	        column-rule-width: 1px;
 	-webkit-column-rule-color: lightblue;
 	   -moz-column-rule-color: lightblue;
+	    -ms-column-rule-color: lightblue;
 			column-rule-color: lightblue;
 	-webkit-column-width: 50%;
 	   -moz-column-width: 50%;
+	    -ms-column-width: 50%;
 			column-width: 50%;
 }
 
@@ -1013,6 +1009,7 @@ img.bapVideo
     background-color: rgba(0,0,0,0);
 	-webkit-transition: all 0.5s ease;
 	   -moz-transition: all 0.5s ease;
+		 -o-transition: all 0.5s ease;
 	        transition: all 0.5s ease;
 }
 
@@ -1024,6 +1021,7 @@ img.bapVideo
 	stroke-dashoffset: 650;
 	-webkit-transition: all 0.5s ease-in-out;
 	   -moz-transition: all 0.5s ease-in-out;
+		 -o-transition: all 0.5s ease-in-out;
 	        transition: all 0.5s ease-in-out;
 }
 
@@ -1034,9 +1032,12 @@ img.bapVideo
 	stroke: #42A5F5;
 	-webkit-transform: translateY(0);
 	   -moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		 -o-transform: translateY(0);
 	        transform: translateY(0);
 	-webkit-transition: all 0.7s ease-in-out;
 	   -moz-transition: all 0.7s ease-in-out;
+		 -o-transition: all 0.7s ease-in-out;
 	        transition: all 0.7s ease-in-out;
 }
 
@@ -1093,6 +1094,8 @@ img.bapVideo
 	border-bottom: 1px solid #fff;
 	-webkit-transform: rotate(-45deg);
 	   -moz-transform: rotate(-45deg);
+		-ms-transform: rotate(-45deg);
+		 -o-transform: rotate(-45deg);
 	        transform: rotate(-45deg);
 }
 
@@ -1101,6 +1104,35 @@ img.bapVideo
 	content: attr(data-website) "\0040" attr(data-user);
 	unicode-bidi: bidi-override;
 	direction: rtl;
+}
+
+@-webkit-keyframes morph 
+{
+	0% 
+	{
+		-webkit-transform: translateX(0);
+		        transform: translateX(0);
+	}
+	30% 
+	{
+		-webkit-transform: translateX(-5px);
+		        transform: translateX(-5px);
+	}
+	50% 
+	{
+		-webkit-transform: translateX(5px);
+		        transform: translateX(5px);
+	}
+	70% 
+	{
+		-webkit-transform: translateX(-2px);
+		        transform: translateX(-2px);
+	}
+	100% 
+	{
+		-webkit-transform: translateX(0);
+		        transform: translateX(0);
+	}
 }
 
 @keyframes morph 
@@ -1163,6 +1195,8 @@ img.bapVideo
 	{
 		-webkit-transform: scale(1) !important;
 		   -moz-transform: scale(1) !important;
+			-ms-transform: scale(1) !important;
+			 -o-transform: scale(1) !important;
 		        transform: scale(1) !important;
 	}
 
@@ -1190,6 +1224,8 @@ img.bapVideo
 	{
 		-webkit-transform: rotate(-45deg);
 		   -moz-transform: rotate(-45deg);
+			-ms-transform: rotate(-45deg);
+			 -o-transform: rotate(-45deg);
 		        transform: rotate(-45deg);
 	}
 
@@ -1197,6 +1233,8 @@ img.bapVideo
 	{
 		-webkit-transform: rotate(45deg);
 		   -moz-transform: rotate(45deg);
+			-ms-transform: rotate(45deg);
+			 -o-transform: rotate(45deg);
 		        transform: rotate(45deg);
 	}
 
@@ -1223,7 +1261,9 @@ img.bapVideo
 		height: 70px;
 		cursor: pointer;
 		padding: 20px;
-		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		   -moz-box-sizing: border-box;
+		        box-sizing: border-box;
 	}
 
 	.ham 
@@ -1244,10 +1284,16 @@ img.bapVideo
 		margin-bottom: 30%;
 		border-radius: 50px;
 		-webkit-transform: rotate(0);
+		   -moz-transform: rotate(0);
+			-ms-transform: rotate(0);
 				transform: rotate(0);
 		-webkit-transform-origin: 50% 50% 0;
+		   -moz-transform-origin: 50% 50% 0;
+			-ms-transform-origin: 50% 50% 0;
 				transform-origin: 50% 50% 0;
 		-webkit-transition: all 400ms ease;
+		   -moz-transition: all 400ms ease;
+			 -o-transition: all 400ms ease;
 		        transition: all 400ms ease;
 	}
 
@@ -1267,6 +1313,7 @@ img.bapVideo
 		background: white !important;
 		-webkit-transition: all 300ms ease;
 		   -moz-transition: all 300ms ease;
+			 -o-transition: all 300ms ease;
 		        transition: all 300ms ease;
 	}
 	
@@ -1355,24 +1402,6 @@ img.bapVideo
 	{
 		font-size: 1.5em;
 	}
-	
-/* 
-	main section p
-	{
-		line-height: 150%;
-	}
-	
-	main section:not([id="intro"]) 
-	{
-		font-size: 100%;
-	}
-
-	main section:not([id="intro"]):not(:last-of-type) 
-	{
-		height: 100%;
-		min-height: 100% !important;
-	}
- */
 }
 
 @media only screen and (max-width: 960px) 
@@ -1412,7 +1441,8 @@ img.bapVideo
 {
 	main section#membership 
 	{
-		box-shadow: none;
+		-webkit-box-shadow: none;
+		        box-shadow: none;
 	}
 
 	.footer-nav, .footer-logo, .footer-policy hr, .social-media 
@@ -1487,13 +1517,6 @@ img.bapVideo
 		font-size: 0.9em !important;
 	}
 	
-/* 
-	nav a span
-	{
-		font-size: 0.7em;
-	}
- */
-
 	main section#intro .center h1 
 	{
 		font-size: 1.5em;
@@ -1510,15 +1533,6 @@ img.bapVideo
 		/* original dimension is 213.7 x 213.7 */
 		width: 107px;
 		height: 107px;
-/* 
-		-webkit-transition: none;
-		   -moz-transition: none;
-		     -o-transition: color 0 ease-in;
-		        transition: none;
-		-webkit-transform: scale(0.5);
-		   -moz-transform: scale(0.5);
-				transform: scale(0.5);
- */
 	}
 	
 	#maestro
