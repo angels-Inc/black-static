@@ -593,4 +593,47 @@ $(document).ready(function()
 			}
 		}
 	});
+	
+	$('#sponsors').magnificPopup(
+	{
+		delegate: 'a',
+		type: 'image',
+		closeOnContentClick: false,
+		closeBtnInside: false,
+		mainClass: 'mfp-with-zoom mfp-img-mobile',
+		image: 
+		{
+			verticalFit: true,
+			titleSrc: function(item) 
+			{
+				var curLang = $(':root').attr('lang');
+				console.log( "Checking sponsor title in locale lang " + curLang );
+				var locTitle = item.el.attr( 'data-title-' + curLang );
+				var caption;
+				if( typeof( locTitle ) !== 'undefined' && locTitle !== false )
+				{
+					caption = item.el.attr( 'data-title-' + curLang );
+				}
+				else
+				{
+					caption = item.el.attr( 'data-title-en-GB' );
+				}
+				return '<a class="sponsor-link" href="' + item.el.attr('data-link') + '" target="_blank">' + caption + '</a>';
+			}
+		},
+		gallery: 
+		{
+			enabled: true
+		},
+		zoom: 
+		{
+			enabled: true,
+			duration: 300, // don't foget to change the duration also in CSS
+			opener: function(element) 
+			{
+				return element.find('img');
+			}
+		}
+		
+	});
 });
