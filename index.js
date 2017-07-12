@@ -23,9 +23,9 @@ $(document).ready(function()
 	'ja-JP' : 
 	{
 		'Undefined' : '未定義値',
-		'Your datetime' : '現在、そちらの時間は%sですが、東京では%sになっております。',
-		'We are opened' : '弊社営業時間内ですので、ぜひご架電もしくはメールを配信してください。早くご回答させていただくよう努力します。',
-		'We are closed' : 'すみませんが、営業時間外ですので、後ほどご架電していただくか、メールの配信していただければ早くご回答させていただくよう努力します。'
+		'Your datetime' : '現在、そちらの時間は%sですが、東京は%sです。',
+		'We are opened' : '弊社営業時間内ですので、お電話もしくはメールをお送り下さい。なるべく早くご回答させて頂きます。',
+		'We are closed' : '誠に申し訳ありませんが、当社の営業時間外ですので、後ほどお電話頂くか、メールをお送り下さい。なるべく早くご回答させて頂きます。'
 		}
 	};
 	window.TZ = 'Asia/Tokyo';
@@ -127,18 +127,31 @@ $(document).ready(function()
 		}
 	}
 
+	// To parse query string.
+	// https://stackoverflow.com/questions/7731778/get-query-string-parameters-with-jquery
+	window.urlParam = function(name) 
+	{
+		var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+		if( results == null )
+		{
+			return( "" );
+		}
+		return results[1] || 0;
+	}
+	
 	var cookieName = 'baCookie';
 	var cookieData = getCookie(cookieName, true);
+	var qsLang = urlParam('lang');
 	
 	// Do we have a language on record?
-	if( cookieData.lang )
+	if( cookieData.lang && !qsLang.length )
 	{
 		propagateThisSiteLang( cookieData.lang );
 	}
 	// Try to find out from the user accepted languages
 	else
 	{
-		var prefLang = window.navigator.languages ? window.navigator.languages : window.navigator.userLanguage ? window.navigator.userLanguage : navigator.language ? navigator.language : '';
+		var prefLang = qsLang.length ? qsLang : window.navigator.languages ? window.navigator.languages : window.navigator.userLanguage ? window.navigator.userLanguage : navigator.language ? navigator.language : '';
 		var okLang;
 		if( prefLang.length )
 		{
