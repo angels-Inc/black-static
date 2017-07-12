@@ -1,27 +1,845 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="title" content="Angels, Inc's Black Angels" />
+		<meta name="description" content="Black Angels are Angels, Inc very special members. Blck Angels are high profile individuals who benefit from a very select and exclusive membership with privileges to Angels, Inc platform and access to very special networking events." />
+		<meta name="keywords" content="Angels Inc, entrepreneurship, ecosystem, investment, advisors, coaching, crowdfunding, networking, party, exclusive, luxury, select, Japan, Tokyo, Asia" />
+	<!-- meta fb -->
+		<meta property="og:title" content="Angels, Inc's Black Angels" />
+		<meta property="og:description" content="Black Angels are Angels, Inc very special members. Blck Angels are high profile individuals who benefit from a very select and exclusive membership with privileges to Angels, Inc platform and access to very special networking events." />
+		<meta property="og:image" content="https://black.angels-inc.com/blackangels.png" />
+		<meta property="og:url" content="https://black.angels-inc.com" />
+		<meta itemprop="name" content="Angels, Inc's Black Angels" />
+		<meta itemprop="description" content="Black Angels are Angels, Inc very special members. Blck Angels are high profile individuals who benefit from a very select and exclusive membership with privileges to Angels, Inc platform and access to very special networking events." />
+		<meta itemprop="image" content="https://black.angels-inc.com/blackangels.png" />
+		<!-- link href="//fonts.googleapis.com/css?family=Open+Sans:300,400" rel="stylesheet" -->
+		<meta name="robots" content="index" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<title
+			data-fr-fr="Angels, Inc Black Angels"
+			data-en-gb="Angels, Inc Black Angels"
+			data-ja-jp="エンジェルズインクのブラックエンジェルズ"
+		>Angels, Inc Black Angels</title>
+		<link href="https://black.angels-inc.com/ba.ico" rel="shortcut icon" type="image/icon" />
+		<link href="https://black.angels-inc.com/ba.ico" rel="icon" />
+		<!-- link rel="stylesheet prefetch" href="normalize.min.css" / -->
+		<link rel="stylesheet" href="index.css" media="screen, print" type="text/css" />
+		<link rel="stylesheet" href="langs.css" />
+		<link rel="stylesheet" href="icons.css" />
+		<link rel="stylesheet" href="magnific-popup/magnific-popup.css" />
+		<link rel="dns-prefetch" href="black.angels-inc.com" />
+		<link rel="apple-touch-icon" sizes="57x57" href="//black.angels-inc.com/apple-touch-icon-57x57.png" />
+		<link rel="apple-touch-icon" sizes="114x114" href="//black.angels-inc.com/apple-touch-icon-114x114.png" />
+		<link rel="apple-touch-icon" sizes="72x72" href="//black.angels-inc.com/apple-touch-icon-72x72.png" />
+		<link rel="apple-touch-icon" sizes="144x144" href="//black.angels-inc.com/apple-touch-icon-144x144.png" />
+		<link rel="apple-touch-icon" sizes="60x60" href="//black.angels-inc.com/apple-touch-icon-60x60.png" />
+		<link rel="apple-touch-icon" sizes="120x120" href="//black.angels-inc.com/apple-touch-icon-120x120.png" />
+		<link rel="apple-touch-icon" sizes="76x76" href="//black.angels-inc.com/apple-touch-icon-76x76.png" />
+		<link rel="apple-touch-icon" sizes="152x152" href="//black.angels-inc.com/apple-touch-icon-152x152.png" />
+		<link rel="apple-touch-icon" sizes="180x180" href="//black.angels-inc.com/apple-touch-icon-180x180.png" />
+		<meta name="apple-mobile-web-app-title" content="Angels, Inc Black Angels" />
+		<link rel="icon" type="image/png" href="//black.angels-inc.com/favicon-192x192.png" sizes="192x192" />
+		<link rel="icon" type="image/png" href="//black.angels-inc.com/favicon-160x160.png" sizes="160x160" />
+		<link rel="icon" type="image/png" href="//black.angels-inc.com/favicon-96x96.png" sizes="96x96" />
+		<link rel="icon" type="image/png" href="//black.angels-inc.com/favicon-16x16.png" sizes="16x16" />
+		<link rel="icon" type="image/png" href="//black.angels-inc.com/favicon-32x32.png" sizes="32x32" />
+		<style>
+#preloader 
+{
+	position: absolute;
+	visibility: visible;
+	opacity: 1;
+	z-index: 0;
+	width: 100%;
+	height: 100%;
+    background: rgb(47, 47, 47) none repeat scroll 0% 0%;
+}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Black Angels</title>
-  <style>
-    .container {
-      display: flex;
-      height: 100vh;
-      width: 100vw;
-      align-items: center;
-      justify-content: center;
-    }
-  </style>
-</head>
+@-webkit-keyframes initDesktopLogin 
+{
+	0%   { opacity: 1; z-index: 0; visibility: visible; }
+	99%  { opacity: 0; z-index: 0; visibility: visible; }
+	100% { z-index: -1; opacity: 0; visibility: hidden; }
+}
 
-<body>
-  <div class="container">
-    <img src="/logo.png" alt="Angels Inc">
-  </div>
+#preloader.initLog 
+{
+	visibility: visible;
+	opacity: 1;
+	-webkit-animation: initDesktopLogin 0.4s 1.5s linear forwards;
+	   -moz-animation: initDesktopLogin 0.4s 1.5s linear forwards;
+}
 
-</body>
+#preloader.initLogExit 
+{
+	visibility: hidden;
+	opacity: 0;
+	-webkit-animation: none;
+	   -moz-animation: none;
+}
 
+#preloader > #spin
+{
+	position: relative;
+	width: 58px;
+	height: 58px;
+	margin: auto;
+	margin-top: 294px;
+}
+
+#spin > div[id^="spin_"]
+{
+	position: absolute;
+	background-color: rgb(255,255,255);
+	width: 14px;
+	height: 14px;
+	-webkit-border-radius: 9px;
+	   -moz-border-radius: 9px;
+		-ms-border-radius: 9px;
+		 -o-border-radius: 9px;
+	        border-radius: 9px;
+	-webkit-animation-name: bounce_spin;
+	   -moz-animation-name: bounce_spin;
+	    -ms-animation-name: bounce_spin;
+	     -o-animation-name: bounce_spin;
+	        animation-name: bounce_spin;
+	-webkit-animation-duration: 1.1s;
+	   -moz-animation-duration: 1.1s;
+	    -ms-animation-duration: 1.1s;
+	     -o-animation-duration: 1.1s;
+	        animation-duration: 1.1s;
+	-webkit-animation-iteration-count: infinite;
+	   -moz-animation-iteration-count: infinite;
+	    -ms-animation-iteration-count: infinite;
+	     -o-animation-iteration-count: infinite;
+	        animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	   -moz-animation-direction: normal;
+	    -ms-animation-direction: normal;
+	     -o-animation-direction: normal;
+	        animation-direction: normal;
+}
+
+#spin > #spin_1
+{
+	left: 0;
+	top: 23px;
+	-webkit-animation-delay: 0.41s;
+	   -moz-animation-delay: 0.41s;
+	    -ms-animation-delay: 0.41s;
+	     -o-animation-delay: 0.41s;
+	        animation-delay: 0.41s;
+}
+
+#spin > #spin_2
+{
+	left: 6px;
+	top: 6px;
+	-webkit-animation-delay: 0.55s;
+	   -moz-animation-delay: 0.55s;
+	    -ms-animation-delay: 0.55s;
+	     -o-animation-delay: 0.55s;
+	        animation-delay: 0.55s;
+}
+
+#spin > #spin_3
+{
+	top: 0;
+	left: 23px;
+	-webkit-animation-delay: 0.69s;
+	   -moz-animation-delay: 0.69s;
+	    -ms-animation-delay: 0.69s;
+	     -o-animation-delay: 0.69s;
+	        animation-delay: 0.69s;
+}
+
+#spin > #spin_4
+{
+	right: 6px;
+	top: 6px;
+	-webkit-animation-delay: 0.83s;
+	   -moz-animation-delay: 0.83s;
+	    -ms-animation-delay: 0.83s;
+	     -o-animation-delay: 0.83s;
+	        animation-delay: 0.83s;
+}
+
+#spin > #spin_5
+{
+	right: 0;
+	top: 23px;
+	-webkit-animation-delay: 0.97s;
+	   -moz-animation-delay: 0.97s;
+	    -ms-animation-delay: 0.97s;
+	     -o-animation-delay: 0.97s;
+	        animation-delay: 0.97s;
+}
+
+#spin > #spin_6
+{
+	right: 6px;
+	bottom: 6px;
+	-webkit-animation-delay: 1.1s;
+	   -moz-animation-delay: 1.1s;
+	     -o-animation-delay: 1.1s;
+	    -ms-animation-delay: 1.1s;
+	        animation-delay: 1.1s;
+}
+
+#spin > #spin_7
+{
+	left: 23px;
+	bottom: 0;
+	-webkit-animation-delay: 1.24s;
+	   -moz-animation-delay: 1.24s;
+	    -ms-animation-delay: 1.24s;
+	     -o-animation-delay: 1.24s;
+	        animation-delay: 1.24s;
+}
+
+#spin > #spin_8
+{
+	left: 6px;
+	bottom: 6px;
+	-webkit-animation-delay: 1.38s;
+	   -moz-animation-delay: 1.38s;
+	    -ms-animation-delay: 1.38s;
+	     -o-animation-delay: 1.38s;
+	        animation-delay: 1.38s;
+}
+
+@-webkit-keyframes bounce_spin
+{
+	0%
+	{
+		-webkit-transform: scale(1);
+	}
+	100%
+	{
+		-webkit-transform: scale(.3);
+	}
+}
+
+@-moz-keyframes bounce_spin
+{
+	0%
+	{
+		-moz-transform: scale(1);
+	}
+	100%
+	{
+		-moz-transform: scale(.3);
+	}
+}
+
+@-ms-keyframes bounce_spin
+{
+	0%
+	{
+		-ms-transform: scale(1);
+	}
+	100%
+	{
+		-ms-transform: scale(.3);
+	}
+}
+
+@-o-keyframes bounce_spin
+{
+	0%
+	{
+		-o-transform: scale(1);
+	}
+	100%
+	{
+		-o-transform: scale(.3);
+	}
+}
+
+@keyframes bounce_spin
+{
+	0%
+	{
+		transform: scale(1);
+	}
+	100%
+	{
+		transform: scale(.3);
+	}
+}
+		</style>
+	</head>
+	<body>
+		<div id="preloader">
+			<div id="spin">
+				<div id="spin_1"></div>
+				<div id="spin_2"></div>
+				<div id="spin_3"></div>
+				<div id="spin_4"></div>
+				<div id="spin_5"></div>
+				<div id="spin_6"></div>
+				<div id="spin_7"></div>
+				<div id="spin_8"></div>
+			</div>
+		</div>
+		<input class="mobile-toggle" id="toggle" name="toggle" type="checkbox" />
+		<header>
+			<div class="align-middle"><a href="https://www.angels-inc.com"><img class="logo" src="Angels,_Inc_Logo.png" /></a></div>
+		</header>
+		<label class="menu" for="toggle" alt="toggle-menu" title="Toggle Menu">
+			<div class="toggle-menu">
+				<div class="ham">
+					<div class="a"></div>
+					<div class="b"></div>
+					<div class="c"></div>
+					<div class="d"></div>
+				</div>
+			</div>
+		</label>
+		<nav>
+			<a href="#intro"><span lang="fr-FR">Home</span><span lang="en-GB">Home</span><span lang="ja-JP">ホーム</span></a>
+			<a href="#about"><span lang="fr-FR">A propos</span><span lang="en-GB">About</span><span lang="ja-JP">概要</span></a>
+			<a href="#benefits"><span lang="fr-FR">Avantages</span><span lang="en-GB">Benefits</span><span lang="ja-JP">メリット</span></a>
+			<a href="#mission"><span lang="fr-FR">Mission</span><span lang="en-GB">Mission</span><span lang="ja-JP">ミッション</span></a>
+			<a href="#bap"><span lang="fr-FR">Networking</span><span lang="en-GB">Networking</span><span lang="ja-JP">ネットワーキング</span></a>
+			<a href="#membership"><span lang="fr-FR">Membre</span><span lang="en-GB">Membership</span><span lang="ja-JP">メンバー</span></a>
+			<a href="#" class="showContact"><span lang="fr-FR">Contact</span><span lang="en-GB">Contact Us</span><span lang="ja-JP">お問い合わせ</span></a>
+			<div id="langMenuPrefix">
+				<span lang="fr-FR">Langues</span><span lang="en-GB">Languages</span><span lang="ja-JP">言語</span>
+			</div>
+			<div class="xlang" id="langMenu">
+				<form>
+					<input id="l10n-en-GB" name="lang" type="radio" value="en-GB" />
+					<input id="l10n-fr-FR" name="lang" type="radio" value="fr-FR" />
+					<input id="l10n-ja-JP" name="lang" type="radio" value="ja-JP" />
+					<div>
+						<div class="xflag" size="small"></div>
+					</div>
+					<ul>
+						<li>
+							<label for="l10n-en-GB" code="en-GB">
+								<div class="xflag" size="small"></div><span lang="en-GB">British English</span><span lang="fr-FR">Anglais</span><span lang="ja-JP">英英語</span>
+							</label>
+						</li>
+						<li>
+							<label for="l10n-fr-FR" code="fr-FR">
+								<div class="xflag" size="small"></div><span lang="en-GB">French</span><span lang="fr-FR">Français</span><span lang="ja-JP">フランス語</span>
+							</label>
+						</li>
+						<li>
+							<label for="l10n-ja-JP" code="ja-JP">
+								<div class="xflag" size="small"></div><span lang="en-GB">Japanese</span><span lang="fr-FR">Japonais</span><span lang="ja-JP">日本語</span>
+							</label>
+						</li>
+					</ul>
+				</form>
+			</div> 
+		</nav>
+		<main>
+			<section id="intro">
+				<h1 class="top"><span lang="fr-FR">Angels, Inc<br />Black Angels</span><span lang="en-GB">Angels, Inc<br />Black Angels</span><span lang="ja-JP">エンジェルズインク<br />ブラックエンジェルズ</span></h1>
+				<h1 class="bottom"><span lang="fr-FR">Aidez-nous à former les entreprises de demain</span><span lang="en-GB">Help us shape the companies of tomorrow</span><span lang="ja-JP">将来の会社を一緒に構築しよう</span></h1>
+			</section>
+			<section id="about">
+				<div class="align clearfix">
+					<div class="text">
+						<p><span lang="fr-FR">Merci de votre intérêt pour les Black Angels : les membres exclusifs d'Angels, Inc</span><span lang="en-GB">Thank you for your interest in Angels, Inc Black Angels special members.</span><span lang="ja-JP">エンジェルズインクのブラックエンジェルズ・メンバーシップにご興味をお持ち頂きありがとうございます。</span></p>
+
+						<h2 lang="fr-FR">Qui sont les membres Black Angels ?</h2>
+						<h2 lang="en-GB">Who are Angels, Inc Black Angels members?</h2>
+						<h2 lang="ja-JP">エンジェルズインクのブラックエンジェルズとは？</h2>
+						<ul class="list">
+						<li><span lang="fr-FR">Les Black Angels sont un groupe très spécial et select de membres d'Angels, Inc. Ils sont essentiellement des investisseurs individuels ou représentant un fond d'investissement</span><span lang="en-GB">Black Angels are a very special and select group of Angels, Inc members. They are primarily investors, whether individual or representing a fund.</span><span lang="ja-JP">ブラックエンジェルズはエンジェルズインクの特別限定メンバーシップ・カテゴリーです。主なメンバーは個人投資家もしくはベンチャーファンドの代表者となっています。</span></li>
+							<li><span lang="fr-FR">Ils sont des gens avec un profile exceptionnel ou une experience riche. Ils partagent tous en commun leur désire d'aider les start-sup en tirant parti de leur experience, de leur temps et bien sûr aussi de leur argent et investissent ces ressources dans les start-ups à différentes étapes de leur croissance et dans toutes sortes d'industries.</span><span lang="en-GB">They are men and women with unique profile or outstanding professional background. They all have in common their desire to support start-ups by leveraging their experience, time and of course their money and invest those resources in start-ups at various stage of growth and in all kind of industries.</span><span lang="ja-JP">メンバーの皆様は様々な分野で卓越した経験と実績をお持ちの方々です。彼らは、やあらゆる分野の有望なスタートアップ企業の各成長段階において投資しながら、彼らの経験と時間、そしてもちろん資金を活用して企業を支援するという共通の情熱を持っています。</span></li>
+							<li><span lang="fr-FR">On devient Black Angel sur recommandation d'autres Black Angels, ou sur décision des membres du conseil d'administration d'Angels, Inc.</span><span lang="en-GB">People become Black Angels on recommendation of other Black Angels or on decision from Angels, Inc board members directly.</span><span lang="ja-JP">ブラックエンジェルズ・メンバーになる為には他のブラックエンジェルズの推薦又はエンジェルズインクの取締役会で承認される事が条件となります。</span></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section id="benefits">
+				<div class="align clearfix">
+					<h2 lang="fr-FR">Les avantages</h2>
+					<h2 lang="en-GB">The benefits</h2>
+					<h2 lang="ja-JP">メンバーのメリット</h2>
+					<div class="text">
+						<span lang="fr-FR">Les Black Angels bénéficient d'un traitement très particulier.</span><span lang="en-GB">Black Angels enjoy very special treatment.</span><span lang="ja-JP">ブラックエンジェルズには様々な特典をご利用頂けます。</span>
+						<ul class="list">
+							<li><span lang="fr-FR">Ils bénéficient du support de staff experimentés conscients du haut profile des Black Angels.</span><span lang="en-GB">They enjoy dedicated support from special trained senior staff mindful of the high profile Black Angels are</span><span lang="ja-JP">ブラックエンジェルズ向け特別コンシェルジュからの専用サポート</span></li>
+							<li><span lang="fr-FR">Ils ont un profile distinct et unique sur la plateforme d'Angels, Inc.</span><span lang="en-GB">They have a unique and distinctive profile on Angels, Inc platform.</span><span lang="ja-JP">エンジェルズインクのプラットフォームでは特殊と特別なプロファイルを持っています。</span></li>
+							<li><span lang="fr-FR">Ils ont accès à un large panel d'information fournie par Angels, Inc</span><span lang="en-GB">They have access to extensive range of information from Angels, Inc.</span><span lang="ja-JP">エンジェルズインクから提供される幅広い情報へのアクセスが可能です。</span></li>
+								<li><span lang="fr-FR">Ils peuvent réseauter avec d'autres Black Angels et les contacter sur la plateforme.</span><span lang="en-GB">They can network with and contact other Black Angels on the platform.</span><span lang="ja-JP">エンジェルズインクのプラットフォーム上で他のブラックエンジェルズと交流し、連絡を取ることができます。</span></li>
+							<li><span lang="fr-FR">Ils ont accès à des training et des séminaires exclusifs sur l'investissement.</span><span lang="en-GB">They have access to special trainings and seminars on investments</span><span lang="ja-JP">投資についての特別な研修やセミナーなどにご参加する事ができます。</span></li>
+							<li><span lang="fr-FR">Ils sont abonnés à une newsletter fournissant des conseils clé.</span><span lang="en-GB">They get access to a regular newsletter with key insights</span><span lang="ja-JP">付加価値のある情報を定期的に提供するニュースレターへのアクセスが可能です。</span></li>
+							<li><span lang="fr-FR">Ils bénéficient de réduction de parternaires</span><span lang="en-GB">They enjoy discounts from special partners</span><span lang="ja-JP">エンジェルズインク主催のイベント等でのパートナー特典割引をお楽しみ頂けます。</span></li>
+							<li><span lang="fr-FR">Et surtout, ils ont accès sans surcoût à l'unique soirée annuelle des Black Angels (plus d'info ci-dessous).</span><span lang="en-GB">And above all, they get access at no extra cost to the Angels, Inc annual Black Angels Party (more on this below)</span><span lang="ja-JP">更なる特典として、年1回開催されるエンジェルズインクのスペシャルイベント”ブラックエンジェルズ・パーティー“へ無料ご招待。（詳細については下記ご参照ください。）</span></li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section id="mission">
+				<div class="align clearfix">
+					<h2 lang="fr-FR">La Mission</h2>
+					<h2 lang="en-GB">The mission</h2>
+					<h2 lang="ja-JP">ミッション</h2>
+					<div class="text">
+						<figure id="LeStudioBon">
+							<img src="jean-freund/Fuji-taste-of-Japan-english-small3.jpg" alt="Japan by Jean Freund from Le Studio Bon" />
+							<figcaption lang="fr-FR">Avec l'aimable autorisation de LeStudioBon.com</figcaption>
+							<figcaption lang="en-GB">Courtesy of LeStudioBon.com</figcaption>
+							<figcaption lang="ja-JP">LeStudioBon.comの厚意により</figcaption>
+						</figure>
+						<p lang="fr-FR">Les membres Black Angels ont une position unique pour avoir une impact positive sur les start-ups en contribuant depuis le début au succès de ces sociétés, avant même que des investissements soient effectués, en conseillant les entrepreneurs, leur offrant leur temps et leurs ressources, dans les industries et les secteurs qui ont de l'attrait pour eux.<br />
+						Avec leur contribution à très forte valeur ajoutée, les membres Black Angels aident à former les sociétés de demain et portent ainsi une responsabilité sociale.</p>
+						<p lang="en-GB">Black Angels members are uniquely positioned to positively impact the start-up scene by contributing from the beginning to the success of those companies, even before any investment is made by advising the entrepreneurs, contributing their time and resources in the industries and sectors that appeal to them.<br />
+						With their invaluable contribution, Black Angels members help shaping the companies of tomorrow and bear a social responsibility.</p>
+						<p lang="ja-JP">ブラックエンジェルズ・メンバーはユニックなポジションでスタートアップ・シーンにポジティブな影響を与えて、実際に資金投資をする前でも、自分の時間又はリソースを生かし、顧問として活動する事により、創業の段階から興味のある業界のスタートアップ企業の成功に貢献することができます。<br />
+						その値千金な貢献により、ブラックエンジェルズメンバーは明日の企業を形作り、社会的責任を負うことになります。</p>
+					</div>
+				</div>
+			</section>
+			<section id="bap">
+				<div class="align clearfix">
+					<h2 lang="fr-FR">La soirée annuelle des Black Angels</h2>
+					<h2 lang="en-GB">The annual Black Angels Party</h2>
+					<h2 lang="ja-JP">ブラックエンジェルズ・パーティー</h2>
+					<div class="text">
+						<div class="video" lang="fr-FR">
+							<div class="overlayVideo">
+								<img src="//img.youtube.com/vi/lhObZqmdxoM/0.jpg" alt="Black Angels Party" class="bapVideo" />
+								<span class="playVideo" data-video-id="lhObZqmdxoM">
+									<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7" xml:space="preserve">
+										<polygon class="triangle" id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
+										<circle class="circle" id="XMLID_17_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"></circle>
+									</svg>
+								</span>
+							</div>
+							<ul class="list">
+								<li>La soirée des Black Angels est un évènement dédié et limité aux Black Angels et d'autres invités spéciaux. Il rassemble des Black Angels d'un peu partout dans le monde, et principalement d'Asie et des divertissements spéciaux se produiront dans une ambiance luxueuse.</li>
+								<li>L'évènement est intégralement géré par Angels, Inc. Quelques sponsors sont séléctionnés, et seulement pour leur contribution à la qualité de l'évènement.</li>
+								<li>Vous pourrez réseauter et vous faire de nouvelles relations dans un cercle unique.</li>
+							</ul>
+							Cette année, la soirée Black Angels se tiendra sur un yacht à deux étages dans la baie de Tokyo. Le code de tenue est formel noir.<br />
+							Durant la soirée Black Angels, il y aura une session de pitch de 3 start-ups sélectionnées au préalable, par le conseil d'administration d'Angels, Inc, pour leur valeur et leur qualité.
+						</div>
+						<div class="video" lang="en-GB">
+							<div class="overlayVideo">
+								<img src="//img.youtube.com/vi/lhObZqmdxoM/0.jpg" alt="Black Angels Party" class="bapVideo" />
+								<span class="playVideo" data-video-id="lhObZqmdxoM">
+									<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7" xml:space="preserve">
+										<polygon class="triangle" id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
+										<circle class="circle" id="XMLID_17_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"></circle>
+									</svg>
+								</span>
+							</div>
+							<ul class="list">
+								<li>The Black Angels party is an event dedicated and restricted to the Black Angels and a few special guests. It gathers Black Angels from all over the world and features special entertainments in a luxury atmosphere.</li>
+								<li>The event is entirely and directly managed by Angels, Inc. Very few sponsors are selected, and solely for their contribution to the quality of the event.</li>
+								<li>You will be able to network and make new relations in a unique venue.</li>
+							</ul>
+							This year, the Black Angels Party takes place on a double deck yacht in the bay of Tokyo. The dress code is black formal.<br />
+							During the Black Angels Party, there will be a pitch contest from a few start-ups that will have been screened by Angels, Inc board for their quality and value.
+						</div>
+						<div class="video" lang="ja-JP">
+							<div class="overlayVideo">
+								<img src="//img.youtube.com/vi/18Z1KSlL0lw/0.jpg" alt="Black Angels Party" class="bapVideo" />
+								<span class="playVideo" data-video-id="18Z1KSlL0lw">
+									<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/" x="0px" y="0px" width="213.7px" height="213.7px" viewBox="0 0 213.7 213.7" enable-background="new 0 0 213.7 213.7" xml:space="preserve">
+										<polygon class="triangle" id="XMLID_18_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" points="73.5,62.5 148.5,105.8 73.5,149.1"></polygon>
+										<circle class="circle" id="XMLID_17_" fill="none" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" cx="106.8" cy="106.8" r="103.3"></circle>
+									</svg>
+								</span>
+							</div>
+							<ul class="list">
+								<li>ブラックエンジェルズ・パーティーは年1回開催されるユニークなイベントです。参加資格のある方はブラックエンジェルズと弊社が特別ご招待したお客様に限られているクローズドなパーティーとなります。アジア諸国他、世界の国からのゲストにご参加頂きます。パーティーでは豪華で上品な雰囲気の中で、特別なエンターテイメントをお楽しみ頂けます。</li>
+								<li>このイベントは株式会社エンジェルズインクが全ての運営・管理を行います。また、パーティーに花を添えて頂く為に厳選されたスポンサーの皆様にご協賛を頂いております。</li>
+								<li>ユニークな雰囲気のパーティ会場で出席者とご交流頂く事により新たなネットワークの構築が可能です。</li>
+							</ul>
+							今年のブラックエンジェルズ・パーティーは東京湾にあるダブルデッキヨットにて開催します。ドレスコードについてはブラックフォーマルウェアとさせて頂いております。<br />
+パーティー会場の一角を使って当社の厳しい審査にて事前に選出されたスタートアップ企業数社を招待し、ピッチコンテストを行います。
+						</div>
+						<p lang="fr-FR">Le maître de céremonie pour la soirée des Black Angels est <a href="#bap" class="showMaestro">Guy Perryman</a>, déjà célèbre pour sa grande experience et succès à produire des évènements de haut profile pour la Chambre de Commerce Britannique.</p>
+						<p lang="en-GB">The master organiser for the Black Angels is <a href="#bap" class="showMaestro">Guy Perryman</a>, already famous for his long experience and successes in delivering high profile events for the British Chamber of Commerce.</p>
+						<p lang="ja-JP">ブラックエンジェルズ・パーティーの総合プロデューサーには<a href="#bap" class="showMaestro">Guy Perryman（ガイ・ペリマン）</a> 氏 MBE（大英帝国勲章）をお迎えしております。ペリマンさんは長期に渡り英日商工会議所のイベント等を企画・運営さている経験豊富なプロデューサーです。</p>
+					</div>
+					<div id="sponsors">
+					Avec l'aimable participation des sponsors de la soirée Black Angels
+					
+					</div>
+				</div>
+			</section>
+			<section id="membership">
+				<div class="align clearfix">
+					<h2 lang="fr-FR">Comment devenir membre ?</h2>
+					<h2 lang="en-GB">How to become member?</h2>
+					<h2 lang="ja-JP">ブラックエンジェルズ・メンバーになるには？</h2>
+					<div class="text">
+						<p lang="fr-FR">Pour devenir membre, vous devez être soit coopté par un autre membre Black Angels soit être approuvé par le conseil d'administration d'Angels, Inc.<br />
+						Les frais annuel de membre sont de 2.000 dollars U.S.</p>
+						<p lang="en-GB">To become a member, you need to be either sponsored by another Black Angels member or be approved by Angels, Inc Board of Directors.<br />
+						The yearly membership fee is 2,000 U.S. dollars.</p>
+						<p lang="ja-JP">ブラックエンジェルズ・メンバーになる為には、他のブラックエンジェルズの推薦又はエンジェルズインクの取締役会で承認される事が条件となります。<br />
+						メンバーには年会費として２，０００ドルをお支払い頂きます。</p>
+					</div>
+				</div>
+			</section>
+		</main>
+		<footer>
+			<div class="align" lang="fr-FR">
+				<div class="footer-nav">
+					<h3>A propos</h3>
+					<a href="https://corp.angels-inc.com/#team">L'équipe</a>
+					<a href="https://corp.angels-inc.com/#mission">Nos mission et valeurs</a>
+					<a href="https://corp.angels-inc.com/#jobs">Carrière</a>
+					<a href="https://corp.angels-inc.com/#ir">Relation investisseur</a>
+					<a href="https://corp.angels-inc.com/#pr">Presse</a>
+					<a class="showContact">Contactez-nous</a>
+				</div>
+				<div class="footer-nav">
+					<h3>Services</h3>
+					<a>Pour Entrepreneurs</a>
+					<a>Pour Professionnels</a>
+					<a>Pour Investisseurs, les Black Angels</a>
+				</div>
+				<div class="footer-nav">
+					<h3>Support</h3>
+					<a>FAQ</a>
+					<a>Blog</a>
+					<a>Documentation</a>
+					<a>Developpeurs</a>
+				</div>
+				<div class="footer-nav">
+					<h3>Suivez-nous :</h3>
+					<a href="https://www.facebook.com/angels.inc.asia/">Facebook</a>
+					<a href="https://twitter.com/AngelsIncAsia">Twitter</a>
+					<a href="https://www.linkedin.com/organization/15156441">LinkedIn</a>
+					<a href="https://www.youtube.com/channel/UCVX8JGcM9531oaeK_pbLYbA">Youtube</a>
+					<a>Instagram</a>
+					<a>Pinterest</a>
+				</div>
+				<div class="footer-logo"></div>
+				<div class="footer-policy">
+					<hr>
+					<p>© 2016-2017 Angels, Inc. Tous droits réservés.</p><br>
+					<div class="policy-links">
+						<a>Termes de Service</a>
+						<p>&nbsp;·&nbsp;</p><a>Politique de confidentialité</a>
+						<p>&nbsp;·&nbsp;</p><a>Politique de cookie</a>
+					</div>
+				</div>
+			</div>
+			<div class="align" lang="en-GB">
+				<div class="footer-nav">
+					<h3>About Us</h3>
+					<a href="https://corp.angels-inc.com/#team">The team</a>
+					<a href="https://corp.angels-inc.com/#mission">Our mission and values</a>
+					<a href="https://corp.angels-inc.com/#jobs">Jobs</a>
+					<a href="https://corp.angels-inc.com/#ir">Investors Relations</a>
+					<a href="https://corp.angels-inc.com/#pr">Press</a>
+					<a class="showContact">Contact us</a>
+				</div>
+				<div class="footer-nav">
+					<h3>Services</h3>
+					<a>For Entrepreneurs</a>
+					<a>For Professionals</a>
+					<a>For Investors, the Black Angels</a>
+				</div>
+				<div class="footer-nav">
+					<h3>Support</h3>
+					<a>FAQ</a>
+					<a>Blog</a>
+					<a>Documentation</a>
+					<a>Developers</a>
+				</div>
+				<div class="footer-nav">
+					<h3>Follow us:</h3>
+					<a href="https://www.facebook.com/angels.inc.asia/">Facebook</a>
+					<a href="https://twitter.com/AngelsIncAsia">Twitter</a>
+					<a href="https://www.linkedin.com/organization/15156441">LinkedIn</a>
+					<a href="https://www.youtube.com/channel/UCVX8JGcM9531oaeK_pbLYbA">Youtube</a>
+					<a>Instagram</a>
+					<a>Pinterest</a>
+				</div>
+				<div class="footer-logo"></div>
+				<div class="footer-policy">
+					<hr>
+					<p>© 2016-2017 Angels, Inc. All rights reserved.</p><br>
+					<div class="policy-links">
+						<a>Terms of Service</a>
+						<p>&nbsp;·&nbsp;</p><a>Privacy Policy</a>
+						<p>&nbsp;·&nbsp;</p><a>Cookie Policy</a>
+					</div>
+				</div>
+			</div>
+			<div class="align" lang="ja-JP">
+				<div class="footer-nav">
+					<h3>会社について</h3>
+					<a href="https://corp.angels-inc.com/#team">チーム</a>
+					<a href="https://corp.angels-inc.com/#mission">我々のミッションと価値</a>
+					<a href="https://corp.angels-inc.com/#jobs">キャリア</a>
+					<a href="https://corp.angels-inc.com/#ir">インベスター・リレーションズ</a>
+					<a href="https://corp.angels-inc.com/#pr">プレス</a>
+					<a class="showContact">お問い合わせ</a>
+				</div>
+				<div class="footer-nav">
+					<h3>サービス</h3>
+					<a>起業家へ</a>
+					<a>専門者へ</a>
+					<a>投資家、ブラックエンジェルズへ</a>
+				</div>
+				<div class="footer-nav">
+					<h3>サポート</h3>
+					<a>FAQ</a>
+					<a>ブログ</a>
+					<a>ドキュメンテーション</a>
+					<a>開発者</a>
+				</div>
+				<div class="footer-nav">
+					<h3>フォロー：</h3>
+					<a href="https://www.facebook.com/angels.inc.asia/">Facebook</a>
+					<a href="https://twitter.com/AngelsIncAsia">Twitter</a>
+					<a href="https://www.linkedin.com/organization/15156441">LinkedIn</a>
+					<a href="https://www.youtube.com/channel/UCVX8JGcM9531oaeK_pbLYbA">Youtube</a>
+					<a>Instagram</a>
+					<a>Pinterest</a>
+				</div>
+				<div class="footer-logo"></div>
+				<div class="footer-policy">
+					<hr>
+					<p>© 2016-2017 Angels, Inc. All rights reserved.</p><br>
+					<div class="policy-links">
+						<a>サービス規則</a>
+						<p>&nbsp;·&nbsp;</p><a>個人情報保護方針</a>
+						<p>&nbsp;·&nbsp;</p><a>クーキー方針</a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<div id="maestro" class="modal">
+			<a href="#close" title="Close" class="close">X</a>
+			<div class="header">
+				<h2 lang="fr-FR">Guy Perryman</h2>
+				<h2 lang="en-GB">Guy Perryman</h2>
+				<h2 lang="ja-JP">Guy Perryman（ガイ・ペリマン）</h2>
+			</div>
+			<div class="body" lang="fr-FR">
+				<img src="Guy_Perryman.png" alt="Guy Perryman" /><p>Guy Perryman est un animateur radio, un acteur voix, et un promoteur d'événements britannique qui a servi de DJ pour des membres de la noblesse incluant SAR Prince William et a interviewé des noblesses du rock telle que Sir Paul McCartney.</p>
+<p>Nommé Appointed MBE (membre de l'ordre de l'Empire Britannique) dans la liste des honneurs de la nouvelle année 2017 pour services rendus à la musique britannique au Japon, et a reçu le British Business Awards 2013 pour la promotion de la musique, la mode et la culture britannique au Japon.</p>
+<p>Basé à Tokyo depuis 1990 lorsqu'il fut amené au Japon comme DJ pour le lancement de Virgin Megastores.<br />
+En 2013, il fut la première personne au monde à servir de DJ régulièrement à bord de ligne aériennes commerciales avec Virgin Atlantic Airways entre Tokyo et Londres.</p>
+<p>Depuis 1995, il a été l'hôte de programmes sur InterFM et a interviewé des centaines de stars telles que Sting, Coldplay, Ed Sheeran, Dame Judi Dench, Sir Paul Smith, Sir Richard Branson et bien d'autres.<br />
+Sa voix peut être entendu sur les programmes de NHK World TV, ainsi qu'un certains nombre de produits commerciaux tels que pour Uniqlo, Suzuki, Panasonic et Toshiba ainsi que des caractères de jeux pour Konami et Sega.</p>
+<p>Il produit l'événement annuel de charité Black Cabaret et divers événements britanniques à thème tel que Bridge Street Market.<br />
+DJ et MC pour de nombreuses experiences corporate, telles que Dom Perignon, Globe-Trotter et l'ambassade britannique à Tokyo.<br />
+1983-1990 DJ à 2SER FM, 2JJJ FM et Virgin Megastores a Sydney, Australia.<br />
+Né en 1965 en Écosse de parents britannique, élevé à Singapour et Australie.</p>
+			</div>
+			<div class="body" lang="en-GB">
+				<img src="Guy_Perryman.png" alt="Guy Perryman" /><p>Guy Perryman is a British radio broadcaster, voice actor and events promoter who has DJ'd for royalty including HRH Prince William and interviewed rock royalty including Sir Paul McCartney.</p>
+<p>Appointed MBE in the British New Year Honours list 2017 for services to British music in Japan. Awarded Person of the Year at the British Chamber of Commerce in Japan, British Business Awards 2013 for promoting British music, fashion and culture in Japan.</p>
+<p>Based in Tokyo since 1990 when brought to Japan as DJ for the launch of Virgin Megastores.<br />
+In 2013 was the world’s first person to DJ regularly on board commercial airline flights with Virgin Atlantic Airways between Tokyo and London.</p>
+<p>Since 1995 has hosted programs on InterFM and has interviewed hundreds of stars including Sting, Coldplay, Ed Sheeran, Dame Judi Dench, Sir Paul Smith, Sir Richard Branson and many more.<br />
+His voice can be heard on NHK World TV programs, a number of product commercials including for Uniqlo, Suzuki, Panasonic and Toshiba plus characters on games for Konami and Sega.</p>
+<p>Produces the annual charity event Black Card Cabaret and various British themed events including Bridge Street Market.<br />
+DJ and MC for many corporate experiences including for Dom Perignon, Globe-Trotter and British Embassy Tokyo.<br />
+1983-1990 DJ at 2SER FM, 2JJJ FM and Virgin Megastores in Sydney, Australia.<br />
+Born 1965 in Scotland to English parents, raised in Singapore and Australia.</p>
+			</div>
+			<div class="body" lang="ja-JP">
+				<img src="Guy_Perryman.png" alt="Guy Perryman" /><p>ガイ・ペリマンはラジオ放送アニメーター、声優、イベント・プロモーターで、ウィリアム王子殿下を含めて王族のためにディスクジョッキーとして受任され、サー・ポール・マッカートニーを含めてロック王族をインタビューを行いました。</p>
+<p>在日、英音楽に対してのサービスのため、MBE（大英帝国勲章）に新２０１７年の栄養リストに任命されました。英音楽、ファッション及び文化を伸し上げたため、在日英商工会義から２０１３年英ビジネス賞をパーソン・オブ・ザ・イヤーとして受賞しました。</p>
+<p>１９９９年にバージンメガストァーの開始のために、日本に最初に行かせてから東京にベースしています。<br />
+２０１３年にバージンアトランティックエアウェイズのために定例的にコマーシャル便で東京とロンドンとの間で世界最初のディスクジョッキーでした。</p>
+<p>
+１９９５年からInterFMラジオに諸プログラムを運用し、スティング、コルドプレイー、エド・シェラン、デイム・ジュディー・デンンチ、サー・Youngin ポール・スミス、サー・リチャード・ブランソンとその他の多くの方々を含めて数百人のスターをインタビューしました。<br />
+ペリマンさんの声はNHKワールドテレビプログラム、やユニクロ、鈴木、パナソニックと東芝そしてコナミとセガのゲームのキャラクターを含めていくつかの商品のコマーシャルで聞こえます。</p>
+<p>ブラックキャバレと言う年チャリティイベントとBridge Street Market（ブリッジ・ストリット・マーケット）を含めて様々な英的テーマでのイベントを演出します。<br />
+Dom Perignon、Globe-Trotter、駐日英国大使館を含めてディスクジョッキーと司会者として受任されました。<br />
+１９８３〜１９９０年2SER・FM、2JJJ・FMとシドニーのバージンメガストアでディスクジョッキー。<br />
+１９６５年にスコットランドにイギリス両親から生まれ、シンガポールとオストリアで育てました。</p>
+			</div>
+			<div class="footer">
+				<button class="button" lang="fr-FR">Fermer</button>
+				<button class="button" lang="en-GB">Close</button>
+				<button class="button" lang="ja-JP">閉じる</button>
+			</div>
+		</div>
+		
+		<div id="contact" class="modal">
+			<a href="#close" title="Close" class="close">X</a>
+			<div class="header">
+				<h2 lang="fr-FR">Information de contact</h2>
+				<h2 lang="en-GB">Contact Information</h2>
+				<h2 lang="ja-JP">連絡先</h2>
+			</div>
+			<div class="body">
+				<section lang="fr-FR">
+					<h3>Siège</h3>
+					<ul>
+						<li class="icon icon-home">
+							Nakabayashi Bldg. 2F<br />
+							2-11 Kandatacho, Chiyoda-ku<br />
+							Tokyo 101-0046<br />
+							Japon<br />
+							<div class="availability"></div>
+						</li>
+					</ul>
+				</section>
+				<section lang="en-GB">
+					<h3>Corporate headquarters</h3>
+					<ul>
+						<li class="icon icon-home">
+							Nakabayashi Bldg. 2F<br />
+							2-11 Kandatacho, Chiyoda-ku<br />
+							Tokyo 101-0046<br />
+							Japan<br />
+							<div class="availability"></div>
+						</li>
+					</ul>
+				</section>
+				<section lang="ja-JP">
+					<h3>本社</h3>
+					<ul>
+						<li class="icon icon-home">
+							〒101-0046 東京都千代田区神田多町二丁目１１番地<br />
+							中林ビル2FNakabayashi Bldg. 2F<br />
+							日本国<br />
+							<div class="availability"></div>
+						</li>
+					</ul>
+				</section>
+				<section lang="fr-FR">
+						<h3>Information générale</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail : <a href="mailto:dave.null@angels-inc.com" data-user="olleh" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							Téléphone : <a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="en-GB">
+						<h3>General inquiry</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail: <a href="mailto:dave.null@angels-inc.com" data-user="olleh" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							Phone: <a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="ja-JP">
+						<h3>一般的お問い合わせ</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							電子メール：<a href="mailto:dave.null@angels-inc.com" data-user="olleh" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							電話：<a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="fr-FR">
+					<h3>Relation presse</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail : <a href="mailto:dave.null@angels-inc.com" data-user="rp" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							Téléphone : <a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="en-GB">
+					<h3>Press relation</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail: <a href="mailto:dave.null@angels-inc.com" data-user="rp" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							Phone: <a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="ja-JP">
+					<h3>プレスリレーションズ</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							電子メール：<a href="mailto:dave.null@angels-inc.com" data-user="rp" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							電話：<a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="fr-FR">
+					<h3>Information ventes</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail : <a href="mailto:dave.null@angels-inc.com" data-user="selas" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							Téléphone : <a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="en-GB">
+					<h3>Sales inquiry</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							E-mail: <a href="mailto:dave.null@angels-inc.com" data-user="selas" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							Phone: <a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+				<section lang="ja-JP">
+					<h3>セールス・お問い合わせ</h3>
+					<ul>
+						<li class="icon icon-envelop">
+							電子メール：<a href="mailto:dave.null@angels-inc.com" data-user="selas" data-website="moc.cni-slegna" class="courriel"></a>
+						</li>
+						<li class="icon icon-phone">
+							電話：<a href="tel:+81-(0)50-5305-7299">+81-(0)50-5305-7299</a>
+						</li>
+					</ul>
+				</section>
+			</div>
+			<div class="footer">
+				<button class="button" lang="fr-FR">Fermer</button>
+				<button class="button" lang="en-GB">Close</button>
+				<button class="button" lang="ja-JP">閉じる</button>
+			</div>
+		</div>
+		<div id="mask"></div>
+		<!-- script src="https://code.jquery.com/jquery-2.2.4.min.js"></script -->
+		<script src="jquery-2.2.4.min.js"></script>
+		<!-- to format dates with timezone -->
+		<script src="moment-with-locales.js"></script>
+		<script src="moment-timezone-with-data.min.js"></script>
+		<!-- to accurately guess visitor's timezone -->
+		<script src="jstz.min.js"></script>
+		<script src="jquery.hoverIntent.js"></script>
+		<script src="sprintf.js"></script>
+		<script src="magnific-popup/jquery.magnific-popup.min.js"></script>
+		<script src="ua-parser.js"></script>
+		<script src="index.js"></script>
+		<script>
+$(window).on('load', function() 
+{
+	$('#preloader').addClass('initLog').delay(1900).queue(function() 
+	{ 
+		$(this).removeClass('initLog').addClass('initLogExit');
+		$('body > header, body > label, body > nav, body > main, body > footer').css({'display':'block'});
+		$(this).dequeue();
+	});
+});
+		</script>
+	</body>
 </html>
+>>>>>>> staging
