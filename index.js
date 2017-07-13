@@ -9,21 +9,21 @@ $(document).ready(function()
 	'en-GB'	: 
 	{
 		'Undefined' : 'Undefined',
-		'Your datetime' : 'Your current local date and time are: %s and it is %s in Tokyo. ',
+		'Your datetime' : 'Your current local date and time are: %(localTime) and it is %(jstTime) in Tokyo. ',
 		'We are opened' : 'We are available. Feel free to call us or send us a mail and we will reply quickly.',
 		'We are closed' : 'Sorry, this is outside of our business hours. Please send us a mail and we will get back to you quickly.'
 		},
 	'fr-FR'	: 
 	{
 		'Undefined' : 'Indéfini',
-		'Your datetime' : 'Votre date et heure actuelles sont : %s et il est %s à Tokyo. ',
+		'Your datetime' : 'Votre date et heure actuelles sont : %(localTime) et il est %(jstTime) à Tokyo. ',
 		'We are opened' : "Nous sommes disponibles. N'hésitez pas à nous appeler ou nous envoyer un courriel et nous répondrons rapidement.",
 		'We are closed' : "Désolé, c'est en dehors de nos heures de bureau. Envoyez-nous un courriel et nous vous répondrons rapidement."
 		},
 	'ja-JP' : 
 	{
 		'Undefined' : '未定義値',
-		'Your datetime' : '現在、そちらの時間は%sですが、東京は%sです。',
+		'Your datetime' : '現在、そちらの時間は%(localTime)ですが、東京は%(jstTime)です。',
 		'We are opened' : '弊社営業時間内ですので、お電話もしくはメールをお送り下さい。なるべく早くご回答させて頂きます。',
 		'We are closed' : '誠に申し訳ありませんが、当社の営業時間外ですので、後ほどお電話頂くか、メールをお送り下さい。なるべく早くご回答させて頂きます。'
 		}
@@ -564,6 +564,16 @@ $(document).ready(function()
 		return( d.tz(currTz) );
 	}
 	
+    function interpolate(str, args) {
+        var _str = str;
+        Object.keys(args).forEach(function(arg) {
+            var value = args[arg];
+            var regx = new RegExp('%\\(' + arg + '\\)', 'g');
+            _str = _str.replace(regx, value)
+        });
+        return _str;
+    }
+
 	function availability()
 	{
 		if( $('#contact').is(':visible') )
@@ -573,7 +583,10 @@ $(document).ready(function()
 			d.locale( $(':root').attr( 'lang' ) );
 			d2.locale( $(':root').attr( 'lang' ) );
 			var localeAvailability = '';
-			if( d.tz.name != TZ ) localeAvailability += sprintf( l10n[ $(':root').attr( 'lang' ) ][ 'Your datetime' ], d.format( 'LLLL' ), d2.format('LLLL') );
+			if( d.tz.name != TZ ) localeAvailability += interpolate( l10n[ $(':root').attr( 'lang' ) ][ 'Your datetime' ], {
+                localTime: d.format( 'LLLL' ),
+                jstTime: d2.format('LLLL')
+            });
 			if( d2.format('H') >= 9 && d2.format('H') <= 20 && 
 				!( d2.format('d') == 0 || d2.format('d') == 1 ) )
 			{

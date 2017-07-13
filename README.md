@@ -17,7 +17,6 @@ jquery.hoverIntent.js | jQuery plugin to improve from the $.hover() function by 
 magnific-popup | The magnific popup directory from Dmitry Semenov <http://dimsemenov.com/plugins/magnific-popup/>
 jquery.magnific-popup.min.js | The JavaScript of Magnific popup
 magnific-popup.css | The CSS for Magnific popup
-sprintf.js | The JavaScript library used to format localised characters strings in the contact popup.
 Tokyo.jpg | The background image used in the contact popup
 ua-parser.js | A small library to parse user agent string, which is then used for impeoved css rules
 
@@ -582,41 +581,54 @@ $('.courriel').on('click', function(e)
 ```
 Those codes are used in the contact popup layer to show the availability of Angels, Inc office notwithstanding from which country the user visits us. This is important because with Internet, you do not know the local time of the company whose website you visit.
 ``` JavaScript
-function getLocalDateTime()
-{
-	var date = new Date();
-	var d = moment.utc(date.toISOString());
-	if( !sessionStorage.getItem('timezone') )
+	function getLocalDateTime()
 	{
-		var tz = jstz.determine() || 'UTC';
-		sessionStorage.setItem('timezone', tz.name());
+		var date = new Date();
+		var d = moment.utc(date.toISOString());
+		if( !sessionStorage.getItem('timezone') ) 
+		{
+			var tz = jstz.determine() || 'UTC';
+			sessionStorage.setItem('timezone', tz.name());
+		}
+		var currTz = sessionStorage.getItem('timezone');
+		return( d.tz(currTz) );
 	}
-	var currTz = sessionStorage.getItem('timezone');
-	return( d.tz(currTz) );
-}
+	
+    function interpolate(str, args) {
+        var _str = str;
+        Object.keys(args).forEach(function(arg) {
+            var value = args[arg];
+            var regx = new RegExp('%\\(' + arg + '\\)', 'g');
+            _str = _str.replace(regx, value)
+        });
+        return _str;
+    }
 
-function availability()
-{
-	if( $('#contact').is(':visible') )
+	function availability()
 	{
-		var d = getLocalDateTime();
-		var d2 = d.clone().tz( TZ );
-		d.locale( $(':root').attr( 'lang' ) );
-		d2.locale( $(':root').attr( 'lang' ) );
-		var localeAvailability = '';
-		if( d.tz.name != TZ ) localeAvailability += sprintf( l10n[ $(':root').attr( 'lang' ) ][ 'Your datetime' ], d.format( 'LLLL' ), d2.format('LLLL') );
-		if( d2.format('H') >= 9 && d2.format('H') <= 20 &&
-			!( d2.format('d') == 0 || d2.format('d') == 1 ) )
+		if( $('#contact').is(':visible') )
 		{
-			localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are opened' ];
+			var d = getLocalDateTime();
+			var d2 = d.clone().tz( TZ );
+			d.locale( $(':root').attr( 'lang' ) );
+			d2.locale( $(':root').attr( 'lang' ) );
+			var localeAvailability = '';
+			if( d.tz.name != TZ ) localeAvailability += interpolate( l10n[ $(':root').attr( 'lang' ) ][ 'Your datetime' ], {
+                localTime: d.format( 'LLLL' ),
+                jstTime: d2.format('LLLL')
+            });
+			if( d2.format('H') >= 9 && d2.format('H') <= 20 && 
+				!( d2.format('d') == 0 || d2.format('d') == 1 ) )
+			{
+				localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are opened' ];
+			}
+			else
+			{
+				localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are closed' ];
+			}
+			$('.availability').html( localeAvailability );
 		}
-		else
-		{
-			localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are closed' ];
-		}
-		$('.availability').html( localeAvailability );
 	}
-}
 ```
 
 Monitor the user click on his/her web browser back or forward button so we can display the page in the right language. Nothing happens if the history feature is not supported by an old web browser.
