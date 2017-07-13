@@ -1136,13 +1136,7 @@ img.bapVideo
 #sponsors img
 {
 	float: left;
-/* 
-	width: 25%;
-	height: 100vh;
-	-o-object-fit: cover;
-	   object-fit: cover;
- */
- 	height: 150px;
+ 	height: 100px;
 	-o-object-fit: scale-down;
 	   object-fit: scale-down;
 }
