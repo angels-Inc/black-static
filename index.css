@@ -545,6 +545,25 @@ main section:not([id="bap"]) figure:hover:before
 	opacity: 0;
 }
 
+#Member
+{
+	display: none !important;
+	visibility: hidden !important;
+}
+
+/* Credit: https://stackoverflow.com/questions/17248915/css-attribute-selector-for-non-empty-attributes#17249001 */
+[data-ac]:not([data-ac=""]) #NotMember
+{
+	display: none !important;
+	visibility: hidden !important;
+}
+
+[data-ac]:not([data-ac=""]) #Member
+{
+	display: block !important;
+	visibility: visible !important;
+}
+
 footer 
 {
 	display: none; /* XXX added */
@@ -1133,24 +1152,100 @@ img.bapVideo
 	color: white;
 }
 
-.sponsor-load-img1
+#Member button 
 {
-	background: url(sponsors/Taittinger-actual.jpg) no-repeat -9999px -9999px;
+	display: block;
+	position: relative;
+	overflow: hidden;
+	width: auto;
+	height: auto;
+	min-width: 150px;
+	min-height: 35px;
+	margin: 10px auto 0;
+	padding: 5px 10px;
+	border: 1px solid #333333;
+	background: #333;
+	text-decoration: none;
+	
+	-webkit-box-shadow: inset 0px 1px 1px 0px rgba(255,255,255,.4);
+	   -moz-box-shadow: inset 0px 1px 1px 0px rgba(255,255,255,.4);
+	        box-shadow: inset 0px 1px 1px 0px rgba(255,255,255,.4);
+	
+	-webkit-border-radius: 4px;
+	   -moz-border-radius: 4px;
+	        border-radius: 4px;
+	
+	
+	-webkit-transition: all 0.2s ease;
+	   -moz-transition: all 0.2s ease;
+	    -ms-transition: all 0.2s ease;
+	     -o-transition: all 0.2s ease;
+	        transition: all 0.2s ease;
+	
+	background-image: -webkit-linear-gradient(bottom, rgba(213,173,109,1) 0%, rgba(213,173,109,1) 26%, rgba(226,186,120,1) 35%, rgba(163,126,67,1) 45%, rgba(145,112,59,1) 61%, rgba(213,173,109,1) 100%);
+	background-image:    -moz-linear-gradient(bottom, rgba(213,173,109,1) 0%, rgba(213,173,109,1) 26%, rgba(226,186,120,1) 35%, rgba(163,126,67,1) 45%, rgba(145,112,59,1) 61%, rgba(213,173,109,1) 100%);
+	background-image:     -ms-linear-gradient(bottom, rgba(213,173,109,1) 0%, rgba(213,173,109,1) 26%, rgba(226,186,120,1) 35%, rgba(163,126,67,1) 45%, rgba(145,112,59,1) 61%, rgba(213,173,109,1) 100%);
+	background-image:      -o-linear-gradient(bottom, rgba(213,173,109,1) 0%, rgba(213,173,109,1) 26%, rgba(226,186,120,1) 35%, rgba(163,126,67,1) 45%, rgba(145,112,59,1) 61%, rgba(213,173,109,1) 100%);
+	background-image:         linear-gradient(bottom, rgba(213,173,109,1) 0%, rgba(213,173,109,1) 26%, rgba(226,186,120,1) 35%, rgba(163,126,67,1) 45%, rgba(145,112,59,1) 61%, rgba(213,173,109,1) 100%);
 }
 
-.sponsor-load-img2
+#Member button span.text 
 {
-	background: url(sponsors/Fauchon-actual.jpg) no-repeat -9999px -9999px;
+    font-weight: normal;
+    font-size: 1.5em;
+    margin: 0 auto;
+ 	text-align: center;
+ 	vertical-align: middle;
+	color: white;
 }
 
-.sponsor-load-img3
+#Member button span.shine 
 {
-	background: url(sponsors/Baccarat-actual.jpg) no-repeat -9999px -9999px;
+	display: block;
+	position: absolute;
+	content: '';
+	top: -80px;
+	left: -20px;
+	width: 20px;
+	height: 400px;
+	opacity: 0.8;
+	background: white;
+	
+	-webkit-box-shadow: 0px 0px 20px 10px white; 
+	   -moz-box-shadow: 0px 0px 20px 10px white; 
+	        box-shadow: 0px 0px 20px 10px white; 
+	
+	-webkit-transform: rotate(-45deg);	
+	   -moz-transform: rotate(-45deg);
+	    -ms-transform: rotate(-45deg);
+	     -o-transform: rotate(-45deg);
+	        transform: rotate(-45deg);
+	
+	-webkit-transition: all 0.4s ease;
+	   -moz-transition: all 0.4s ease;
+	    -ms-transition: all 0.4s ease;
+	     -o-transition: all 0.4s ease;
+	        transition: all 0.4s ease;
 }
 
-.sponsor-load-img4
+#Member button:hover 
 {
-	background: url(sponsors/Lexus-actual.jpg) no-repeat -9999px -9999px;
+	-webkit-box-shadow: inset 0px 1px 10px 0px rgba(255,255,255,.4), 0px 3px 3px 0px rgba(0,0,0,0.4);
+	   -moz-box-shadow: inset 0px 1px 10px 0px rgba(255,255,255,.4), 0px 3px 3px 0px rgba(0,0,0,0.4);
+	        box-shadow: inset 0px 1px 10px 0px rgba(255,255,255,.4), 0px 3px 3px 0px rgba(0,0,0,0.4);
+}
+
+#Member button:active 
+{
+	-webkit-box-shadow: inset 0px 1px 15px 0px rgba(0,0,0,.4), inset 0px 1px 1px 1px rgba(0,0,0,.2), 0px 1px 1px 0 rgba(255,255,255,.5);
+	   -moz-box-shadow: inset 0px 1px 15px 0px rgba(0,0,0,.4), inset 0px 1px 1px 1px rgba(0,0,0,.2), 0px 1px 1px 0 rgba(255,255,255,.5);
+	        box-shadow: inset 0px 1px 15px 0px rgba(0,0,0,.4), inset 0px 1px 1px 1px rgba(0,0,0,.2), 0px 1px 1px 0 rgba(255,255,255,.5);
+}
+
+#Member button:hover span.shine 
+{
+	left: 170px;
+	top: -300px;
 }
 
 @-webkit-keyframes morph 

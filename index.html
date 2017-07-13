@@ -25,8 +25,8 @@
 		<link href="https://black.angels-inc.com/ba.ico" rel="shortcut icon" type="image/icon" />
 		<link href="https://black.angels-inc.com/ba.ico" rel="icon" />
 		<!-- link rel="stylesheet prefetch" href="normalize.min.css" / -->
-		<link rel="stylesheet" href="index.css" media="screen, print" type="text/css" />
-		<link rel="stylesheet" href="langs.css" />
+		<link rel="stylesheet" href="index.css?v=1499906496" media="screen, print" type="text/css" />
+		<link rel="stylesheet" href="langs.css?v=1499906496" />
 		<link rel="stylesheet" href="icons.css" />
 		<link rel="stylesheet" href="magnific-popup/magnific-popup.css" />
 		<link rel="dns-prefetch" href="black.angels-inc.com" />
@@ -475,7 +475,7 @@
 				</div>
 			</section>
 			<section id="membership">
-				<div class="align clearfix">
+				<div class="align clearfix" id="NotMember">
 					<h2 lang="fr-FR">Comment devenir membre ?</h2>
 					<h2 lang="en-GB">How to become member?</h2>
 					<h2 lang="ja-JP">ブラックエンジェルズ・メンバーになるには？</h2>
@@ -487,6 +487,23 @@
 						<p lang="ja-JP">ブラックエンジェルズ・メンバーになる為には、他のブラックエンジェルズの推薦又はエンジェルズインクの取締役会で承認される事が条件となります。<br />
 						メンバーには年会費として２，０００ドルをお支払い頂きます。</p>
 					</div>
+				</div>
+				<div class="align clearfix" id="Member">
+					<h2 lang="fr-FR">Bienvenue !</h2>
+					<h2 lang="en-GB">Welcome!</h2>
+					<h2 lang="ja-JP">ようこそ！</h2>
+					<p lang="fr-FR">Veuillez activer votre carte Black Angels en cliquant sur le bouton ci-dessous et en entrant votre numéro de carte</p>
+					<p lang="en-GB">Please activate your Black Angels card by clicking on the button below and entering your card number.</p>
+					<p lang="ja-JP">下記のボタンをクリックし、カード番号を入力し、ブラックエンジェルズ・メンバーズカードを有効して下さい。</p>
+					<button>
+						<span class="shine"></span>
+						<span class="text" lang="fr-FR">Activer</span>
+						<span class="text" lang="en-GB">Activate</span>
+						<span class="text" lang="ja-JP">アクティブ化</span>
+					</button>
+					<p lang="fr-FR">Les frais annuel de membre sont de 2.000 dollars U.S.</p>
+					<p lang="en-GB">The yearly membership fee is 2,000 U.S. dollars.</p>
+					<p lang="ja-JP">メンバーには年会費として２，０００ドルをお支払い頂きます。</p>
 				</div>
 			</section>
 		</main>
@@ -621,11 +638,6 @@
 				</div>
 			</div>
 		</footer>
-		
-		<div class="sponsor-load-img1"></div>
-		<div class="sponsor-load-img2"></div>
-		<div class="sponsor-load-img3"></div>
-		<div class="sponsor-load-img4"></div>
 		
 		<div id="maestro" class="modal">
 			<a href="#close" title="Close" class="close">X</a>
@@ -839,16 +851,25 @@ Dom Perignon、Globe-Trotter、駐日英国大使館を含めてディスクジ�
 		<script src="sprintf.js"></script>
 		<script src="magnific-popup/jquery.magnific-popup.min.js"></script>
 		<script src="ua-parser.js"></script>
-		<script src="index.js"></script>
+		<script src="index.js?v=1499906496"></script>
 		<script>
 $(window).on('load', function() 
 {
-	$('#preloader').addClass('initLog').delay(1900).queue(function() 
+	$('#preloader').addClass('initLog').delay(900).queue(function() 
 	{ 
 		$(this).removeClass('initLog').addClass('initLogExit');
 		$('body > header, body > label, body > nav, body > main, body > footer').css({'display':'block'});
 		$(this).dequeue();
 	});
+	
+	// Preloading images
+	setTimeout(function() 
+	{
+		new Image().src = "sponsors/Taittinger-actual.jpg";
+		new Image().src = "sponsors/Fauchon-actual.jpg";
+		new Image().src = "sponsors/Baccarat-actual.jpg";
+		new Image().src = "sponsors/Lexus-actual.jpg";
+	}, 1000);	
 });
 		</script>
 	</body>

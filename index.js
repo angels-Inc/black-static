@@ -216,6 +216,14 @@ $(document).ready(function()
 		}
 	}
 	
+	// If we found an activation code
+	if( urlParam('c').length )
+	{
+		$(':root').attr( 'data-ac', urlParam('c') );
+	}
+	// We collected what we needed. Remove the query string now from the url
+	history.pushState( '', document.title, window.location.pathname );
+	
 	// Enhanced css rules triggered by attributes in the html tag
 	var parser = new UAParser();
 	var browser = parser.getBrowser();
