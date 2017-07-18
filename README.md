@@ -585,7 +585,7 @@ Those codes are used in the contact popup layer to show the availability of Ange
 	{
 		var date = new Date();
 		var d = moment.utc(date.toISOString());
-		if( !sessionStorage.getItem('timezone') ) 
+		if( !sessionStorage.getItem('timezone') )
 		{
 			var tz = jstz.determine() || 'UTC';
 			sessionStorage.setItem('timezone', tz.name());
@@ -593,7 +593,7 @@ Those codes are used in the contact popup layer to show the availability of Ange
 		var currTz = sessionStorage.getItem('timezone');
 		return( d.tz(currTz) );
 	}
-	
+
     function interpolate(str, args) {
         var _str = str;
         Object.keys(args).forEach(function(arg) {
@@ -617,7 +617,7 @@ Those codes are used in the contact popup layer to show the availability of Ange
                 localTime: d.format( 'LLLL' ),
                 jstTime: d2.format('LLLL')
             });
-			if( d2.format('H') >= 9 && d2.format('H') <= 20 && 
+			if( d2.format('H') >= 9 && d2.format('H') <= 20 &&
 				!( d2.format('d') == 0 || d2.format('d') == 1 ) )
 			{
 				localeAvailability += l10n[ $(':root').attr( 'lang' ) ][ 'We are opened' ];
@@ -682,6 +682,52 @@ The CSS file [langs.css](./langs.css) contains all the specifications including 
 ### User interface
 The language change selector is located at the top right, which is the expected location according to [this user study](http://flagsarenotlanguages.com/blog/2013/10/case-study-onefinestay-com-and-dropdown-language-selection/).
 Once the language is set, it is remembered as a session information stored in the client-side.
+
+## Invitation code (proposal)
+An invitation payload to become a black angel member may be passed to the page via the querystring. If said parameter exists, customized content and CTA buttons may be displayed. Note that the following specification is at the proposal stage.
+
+### Query parameter
+The query parameter used is `invite` for example: `https://black.angels-inc.com?invite=...`
+
+### Payload encoding
+The payload is base64 encoded.
+
+###Payload specification
+The payload is a string representation of the following JSON payload
+
+```JSON
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "locale": "ja-JP",
+  "inviteId" : "cj49myzav6tlz01753hlu94s9"
+}
+```
+
+firstname : String!
+
+lastName: String!
+
+locale: String Enum! ["en-US", "ja-JP"]
+
+inviteID: ID! (In its GraphQl representation)
+
+An example of the target url once the payload is base64 encoded :
+
+`https://black.angels-inc.com?invite=ew0KICAiZmlyc3ROYW1lIjogIkpvaG4iLA0KICAibGFzdE5hbWUiOiAiRG9lIiwNCiAgImxvY2FsZSI6ICJqYS1KUCIsDQogICJpbnZpdGVJZCIgOiAiY2o0OW15emF2NnRsejAxNzUzaGx1OTRzOSINCn0g`
+
+### Payload parsing example
+``` JavaScript
+const qs = new URLSearchParams(window.location.search);
+const encodedPayload = qs.get('invite');
+const decodedPayload = atob(encodedPayload);
+try {
+  const { firstName, lastName, locale, inviteId } = JSON.parse(decodedPayload);
+}
+catch(e) {
+  console.error(e);
+}
+```
 
 ## To do
 1. Build the icons referenced in the header
