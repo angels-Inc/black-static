@@ -692,7 +692,7 @@ The query parameter used is `invite` for example: `https://black.angels-inc.com?
 ### Payload encoding
 The payload is base64 encoded.
 
-###Payload specification
+### Payload specification
 The payload is a string representation of the following JSON payload
 
 ```JSON
@@ -735,7 +735,7 @@ catch(e) {
 1. ~~Remove the unused language from the menu as they are here just to test~~
 1. ~~Change the CSS in [index.css](./index.css) so a selected menu item is shown as selected~~ (fix #6)
 1. Set overflow to default for the mobile version so the menu can be scrolled
-1. Add the logo or other brand assets of the sponsors on the bottom of the page
+1. ~~Add the logo or other brand assets of the sponsors on the bottom of the page~~
 1. Add also the picture of key participants to influence others to join as well.
 
 See <https://github.com/angels-Inc/black-static/issues> for more !
