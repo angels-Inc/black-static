@@ -217,9 +217,9 @@ $(document).ready(function()
 	}
 	
 	// If we found an activation code
-	if( urlParam('c').length )
+	if( urlParam('invite').length )
 	{
-		$(':root').attr( 'data-ac', urlParam('c') );
+		$(':root').attr( 'data-ac', urlParam('invite') );
 	}
 	// We collected what we needed. Remove the query string now from the url
 	history.pushState( '', document.title, window.location.pathname );
